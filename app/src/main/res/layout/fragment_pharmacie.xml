@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:id="@+id/linearLayout" android:layout_marginTop="8dp">
+
+    <ImageView
+            android:layout_height="0dp" app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/image" android:layout_width="wrap_content"
+            android:padding="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"/>
+
+    <TextView
+            android:id="@+id/item_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/content"
+            app:layout_constraintBaseline_toBaselineOf="@+id/nom" app:layout_constraintStart_toEndOf="@+id/image"
+            android:layout_marginLeft="20dp" android:layout_marginStart="20dp"
+            app:layout_constraintVertical_bias="0.4"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/nom"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@+id/item_number"
+            android:layout_marginLeft="20dp" android:layout_marginStart="20dp"
+            app:layout_constraintVertical_bias="0.0" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/butAddCmd" android:layout_marginRight="8dp"
+            app:layout_constraintHorizontal_bias="0.037"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/content" android:inputType="textMultiLine"
+            android:maxLines="3"
+            app:layout_constraintStart_toEndOf="@+id/image"
+            android:layout_marginStart="20dp" android:layout_marginLeft="20dp" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/butAddCmd" android:layout_marginRight="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/nom"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:id="@+id/butAddCmd" android:layout_width="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp" app:backgroundTint="@android:color/holo_red_dark"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
