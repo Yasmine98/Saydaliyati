@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "943942888992",
+    "firebase_url": "https://saydaliyati-5172d.firebaseio.com",
+    "project_id": "saydaliyati-5172d",
+    "storage_bucket": "saydaliyati-5172d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943942888992:android:c5e681657d283cab",
+        "android_client_info": {
+          "package_name": "com.example.rofaida.saydaliyati"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943942888992-8dmkmvg3g6f6s9udhfd7thvj94o3uob6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuQX9DSlIgeSN9umweJKMNakHCOEKii2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943942888992-8dmkmvg3g6f6s9udhfd7thvj94o3uob6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

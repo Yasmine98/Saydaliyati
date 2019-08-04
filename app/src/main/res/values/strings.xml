@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Saydaliyati</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="NSS">Numéro de sécurité social</string>
+    <string name="passowrd">Mot de Passe</string>
+    <string name="login">Connexion</string>
+    <string name="show_pwd">Afficher Mot de Passe</string>
+    <string name="hide_pwd">Masquer Mot de Passe</string>
+    <string name="forgot">Mot de Passe oublié?</string>
+    <string name="closebutton">Close Button for Activity</string>
+    <string name="newUser">Vous n\'avez pas un compte? Inscrivez-vous ici.</string>
+    <string name="firstName">Prénom</string>
+    <string name="lastName">Nom</string>
+    <string name="mobileNumber">Numéro de téléphone</string>
+    <string name="location">Adresse</string>
+    <string name="confirmPassword">Confirmez Mot de Passe</string>
+    <string name="terms_conditions">En cliquant sur INSCRIRE, vous acceptez tous les termes et conditions.</string>
+    <string name="signUp">INSCRIRE</string>
+    <string name="already_user">Vous avez déjà un compte? Connectez-vous ici</string>
+    <string name="registered_emailid">Entrez votre Numéro de Téléphone ici :</string>
+    <string name="submit">VALIDER</string>
+    <string name="back">RETOUR</string>
+
+</resources>
