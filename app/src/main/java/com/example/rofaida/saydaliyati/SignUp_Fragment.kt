@@ -6,19 +6,18 @@ import java.util.regex.Pattern
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.content.res.ColorStateList
-import android.content.res.XmlResourceParser
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.View
-import android.view.View.OnClickListener
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.twilio.verification.TwilioVerification
 import com.google.android.gms.tasks.RuntimeExecutionException
-import com.twilio.verification.external.Via
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,14 +39,14 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
     private lateinit var terms_conditions: CheckBox
     private lateinit var view1:View
 
-    private var tokenServerApi: TokenServerApi? = null
-    private lateinit var twilioVerification:TwilioVerification
+    val ACCOUNT_SID = "AC73955cfb33b8e4a118b39a0afe69182a"
+    val AUTH_TOKEN = "ef7ba53374e40890a3177fddb24b8cf6"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initTokenServerApi()
-        twilioVerification = TwilioVerification(this.context!!)
+        //initTokenServerApi()
+        //twilioVerification = TwilioVerification(this.context!!)
     }
 
     override fun onClick(v: View) {
@@ -161,44 +160,47 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
             // Make sure user should check Terms and Conditions checkbox
             // Check if both password should be equal
             // Check if email id valid or not
-            val numberToVerify = getMobileNumber //Should come from user input
 
-            tokenServerApi!!.getToken(numberToVerify)
-                .enqueue(object : Callback<TokenServerResponse> {
+            sendMessage()
 
-                    override fun onResponse(
-                        call: Call<TokenServerResponse>,
-                        response: Response<TokenServerResponse>
-                    ) {
-                        val jwtToken = response.body()?.getJwtToken()
-                        if (jwtToken != null) {
-                            twilioVerification.startVerification(jwtToken, Via.SMS)
-                            Toast.makeText(activity, jwtToken, Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                        else
-                            Toast.makeText(activity, "NULL", Toast.LENGTH_SHORT)
-                                .show()
-                    }
-
-                    override fun onFailure(call: Call<TokenServerResponse>, t: Throwable) {
-                        throw RuntimeExecutionException(t) //Woops!
-                    }
-                })
 
         }
 
     }
 
-    private fun initTokenServerApi() {
-        val TOKEN_SERVER_URL = "https://saydaliyati.herokuapp.com/"
+
+    /***************************************** Send Message ******************************************************/
+
+    private fun sendMessage()
+    {
+        val body = "Hello test"
+        val from = "+18162826468"
+        val to = "+213793740560"
+
+        val base64EncodedCredentials = "Basic " + Base64.encodeToString((ACCOUNT_SID + ":" + AUTH_TOKEN).toByteArray(), Base64.NO_WRAP)
+        val smsData = mutableMapOf<String, String>()
+
+        smsData.put("From", from);
+        smsData.put("To", to);
+        smsData.put("Body", body);
 
         val retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(TOKEN_SERVER_URL)
+            .baseUrl("https://api.twilio.com/2010-04-01/")
             .build()
+        val api = retrofit.create(TwilioApi::class.java)
+        api.sendMessage(ACCOUNT_SID, base64EncodedCredentials, smsData).enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("TAG", "onFailure")
+                throw RuntimeExecutionException(t) //Woops!
+            }
 
-        tokenServerApi = retrofit.create(TokenServerApi::class.java)
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful()) Log.d("TAG", "onResponse->success")
+                else Log.d("TAG", response.message())
+            }
+
+    })
+
     }
 
 }

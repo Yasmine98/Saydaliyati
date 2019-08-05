@@ -16,12 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <receiver android:name=".MyVerificationReceiver" >
-            <intent-filter>
-                <action android:name="com.twilio.verification.current_status" />
-            </intent-filter>
-        </receiver>
-
     </application>
 
 </manifest>
