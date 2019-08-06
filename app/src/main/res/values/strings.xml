@@ -23,5 +23,11 @@
     <string name="registered_emailid">Entrez votre Numéro de Téléphone ici :</string>
     <string name="submit">VALIDER</string>
     <string name="back">RETOUR</string>
+    <string name="code">Enter Code</string>
+    <string name="message_conf">Entrez le code de vérification que vous avez reçu par SMS</string>
+    <string name="continu">Conituner</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -12,7 +12,6 @@ import retrofit2.Retrofit
 class MainActivity : AppCompatActivity() {
 
     private lateinit var fragmentManager: FragmentManager
-    private var tokenServerApi: TokenServerApi? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

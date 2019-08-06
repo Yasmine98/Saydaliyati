@@ -10,11 +10,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.RuntimeExecutionException
 import okhttp3.ResponseBody
@@ -32,11 +28,10 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
     private lateinit var NSS:EditText
     private lateinit var mobileNumber:EditText
     private lateinit var location:EditText
-    private lateinit var password: EditText
-    private lateinit var confirmPassword:EditText
     private lateinit var login: TextView
     private lateinit var signUpButton: Button
     private lateinit var terms_conditions: CheckBox
+    private lateinit var progressBar_: ProgressBar
     private lateinit var view1:View
 
     val ACCOUNT_SID = "AC73955cfb33b8e4a118b39a0afe69182a"
@@ -84,11 +79,10 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
         NSS = view1.findViewById<View>(R.id.NSS) as EditText
         mobileNumber = view1.findViewById<View>(R.id.mobileNumber) as EditText
         location = view1.findViewById<View>(R.id.location) as EditText
-        password = view1.findViewById<View>(R.id.password) as EditText
-        confirmPassword = view1.findViewById<View>(R.id.confirmPassword) as EditText
         signUpButton = view1.findViewById<View>(R.id.signUpBtn) as Button
         login = view1.findViewById<View>(R.id.already_user) as TextView
         terms_conditions = view1.findViewById<View>(R.id.terms_conditions) as CheckBox
+        progressBar_ = view1.findViewById(R.id.progressBar2) as ProgressBar
 
         // Setting text selector over textviews
         val xrp = getResources().getXml(R.drawable.text_selector)
@@ -121,8 +115,6 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
         val getNSS = NSS.text.toString()
         val getMobileNumber = mobileNumber.text.toString()
         val getLocation = location.text.toString()
-        val getPassword = password.text.toString()
-        val getConfirmPassword = confirmPassword.text.toString()
 
         // Pattern match for email id
         val p = Pattern.compile(Utils.regEx)
@@ -134,9 +126,6 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
             || getNSS == "" || getNSS.length == 0
             || getMobileNumber == "" || getMobileNumber.length == 0
             || getLocation == "" || getLocation.length == 0
-            || getPassword == "" || getPassword.length == 0
-            || getConfirmPassword == ""
-            || getConfirmPassword.length == 0
         )
 
             CustomToast().Show_Toast(
@@ -146,10 +135,6 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
             CustomToast().Show_Toast(
                 this.context!!, view1,
                 "Votre Numéro de Téléphone est invalide.")
-        else if (getConfirmPassword != getPassword)
-            CustomToast().Show_Toast(
-                this.context!!, view1,
-                "Les deux Mots de Passe ne correspondent pas.")
         else if (!terms_conditions.isChecked)
             CustomToast().Show_Toast(
                 this.context!!, view1,
@@ -161,8 +146,7 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
             // Check if both password should be equal
             // Check if email id valid or not
 
-            sendMessage()
-
+            sendMessage(getMobileNumber)
 
         }
 
@@ -171,11 +155,16 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
 
     /***************************************** Send Message ******************************************************/
 
-    private fun sendMessage()
+    private fun generatePassword(): String {
+        val STRING_CHARACTERS = ('0'..'z').toList().toTypedArray()
+        val password_ = (1..8).map { STRING_CHARACTERS.random() }.joinToString("")
+        return password_
+    }
+
+    private fun sendMessage(to:String)
     {
-        val body = "Hello test"
+        val body = generatePassword()
         val from = "+18162826468"
-        val to = "+213793740560"
 
         val base64EncodedCredentials = "Basic " + Base64.encodeToString((ACCOUNT_SID + ":" + AUTH_TOKEN).toByteArray(), Base64.NO_WRAP)
         val smsData = mutableMapOf<String, String>()
@@ -188,15 +177,39 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
             .baseUrl("https://api.twilio.com/2010-04-01/")
             .build()
         val api = retrofit.create(TwilioApi::class.java)
+        progressBar_.setVisibility(View.VISIBLE)
         api.sendMessage(ACCOUNT_SID, base64EncodedCredentials, smsData).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d("TAG", "onFailure")
-                throw RuntimeExecutionException(t) //Woops!
+                progressBar_.setVisibility(View.GONE)
+                Toast.makeText(activity, "Problème d'envoie de code de vérification", Toast.LENGTH_SHORT)
+                    .show()
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful()) Log.d("TAG", "onResponse->success")
-                else Log.d("TAG", response.message())
+                if (response.isSuccessful())
+                {
+                    progressBar_.setVisibility(View.GONE)
+                    Log.d("TAG", "onResponse->success")
+                    var code:Bundle = Bundle()
+                    code.putString("message", body)
+                    val fragment_new:Fragment = Verification_Code_Fragment()
+                    fragment_new.arguments = code
+                    fragmentManager!!.beginTransaction()
+                        .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                        .replace(
+                            R.id.frameContainer,
+                            fragment_new,
+                            Utils.Verification_Code_Fragment
+                        ).commit()
+                }
+                else
+                {
+                    progressBar_.setVisibility(View.GONE)
+                    Log.d("TAG", response.message())
+                    Toast.makeText(activity, "Problème d'envoie de code de vérification", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
 
     })
