@@ -55,8 +55,10 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:2.0.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.0.0"
     // Google maps
-    implementation 'com.google.android.gms:play-services-maps:15.0.1'
 
     // Google Maps Android API Utility Library
     implementation 'com.google.maps.android:android-maps-utils:0.5'
+     implementation 'com.google.android.gms:play-services-location:15.0.1'
+
+    implementation 'com.mcxiaoke.volley:library-aar:1.0.0'
 }

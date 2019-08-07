@@ -12,7 +12,7 @@ interface Endpoint {
     fun getPharma(): Call<List<pharmacie>>
     // Envoi d'un paramètre name
     @GET("getpharmabyville/{ville}")
-    fun pharma_vile(@Path("team") isbn:String):Call<List<pharmacie>>
+    fun pharma_vile(@Path("ville") isbn:String):Call<List<pharmacie>>
     @POST("addpharma")
     fun addPharma(@Body pharmacie: pharmacie):Call<String>
 

@@ -18,10 +18,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.content.Intent
-
-
-
-
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_master.*
+import kotlinx.android.synthetic.main.app_bar_master.*
 
 
 /**
@@ -33,7 +36,7 @@ class pharmacieFragment : Fragment() {
 
     // TODO: Customize parameters
     private var columnCount = 1
-
+    private var ville = "Alger"
     private var listener: OnListFragmentInteractionListener? = null
 
     lateinit var v : View
@@ -43,6 +46,7 @@ class pharmacieFragment : Fragment() {
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
+            ville = it.getString(ARG_VILLE)
         }
     }
 
@@ -59,7 +63,15 @@ class pharmacieFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val call = RetrofitService.endpoint.getPharma()
+
+       // prepareDrawer()
+        val a = activity as Master
+        a?.actualFrag = "list"
+        // mToolBarNavigationListenerIsRegistered = true
+
+
+
+        val call = RetrofitService.endpoint.pharma_vile(ville)
         // progressBar.visibility = View.VISIBLE
         call.enqueue(object: Callback<List<pharmacie>> {
             override fun onResponse(call: Call<List<pharmacie>>?, response:
@@ -130,19 +142,46 @@ class pharmacieFragment : Fragment() {
     }
 
 
-
     companion object {
 
         // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
-
+        const val ARG_VILLE = "column-count"
         // TODO: Customize parameter initialization
         @JvmStatic
-        fun newInstance(columnCount: Int) =
+        fun newInstance(columnCount: Int, ville: String) =
             pharmacieFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
+                    putString(ARG_VILLE, ville)
                 }
             }
+    }
+
+    private fun prepareDrawer(){
+
+        val  drawer_layout = activity?.findViewById(R.id.drawer_layout) as DrawerLayout
+        var toggle = ActionBarDrawerToggle(
+            activity, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
+
+        drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        // Remove hamburger
+        toggle.setDrawerIndicatorEnabled(false)
+        // Show back button
+        var a = activity as AppCompatActivity
+        a.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        // when DrawerToggle is disabled i.e. setDrawerIndicatorEnabled(false), navigation icon
+        // clicks are disabled i.e. the UP button will not work.
+        // We need to add a listener, as in below, so DrawerToggle will forward
+        // click events to this listener.
+        toggle.setToolbarNavigationClickListener( {
+            // Doesn't have to be onBackPressed
+            //activity?.supportFragmentManager?.popBackStack()
+            a.onBackPressed()
+
+        }
+        )
+
     }
 }

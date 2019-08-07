@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), pharmacieFragment.OnListFragmentIntera
                 // 3
                 .beginTransaction()
                 // 4
-                .add(R.id.frame_container, pharmacieFragment.newInstance(1), "pharmaList")
+                .add(R.id.frame_container, pharmacieFragment.newInstance(1, "Alger"), "pharmaList")
                 // 5
                 .commit()
         }
