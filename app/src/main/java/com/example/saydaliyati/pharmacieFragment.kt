@@ -146,7 +146,7 @@ class pharmacieFragment : Fragment() {
 
         // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
-        const val ARG_VILLE = "column-count"
+        const val ARG_VILLE = "ville"
         // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int, ville: String) =

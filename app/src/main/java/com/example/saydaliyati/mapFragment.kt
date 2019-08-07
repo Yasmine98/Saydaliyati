@@ -105,13 +105,7 @@ class mapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCa
       //  mLatitudeTextView = (TextView) findViewById((R.id.latitude_textview));
        // mLongitudeTextView = (TextView) findViewById((R.id.longitude_textview));
 
-        mGoogleApiClient = GoogleApiClient.Builder(activity!!)
-     //           .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
 
-        mLocationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     }
 
@@ -121,10 +115,17 @@ class mapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCa
     ): View? {
         prepareDrawer()
         val v = inflater.inflate(R.layout.fragment_map, container, false)
+       mGoogleApiClient = GoogleApiClient.Builder(activity!!)
+            //           .addConnectionCallbacks(this)
+            .addOnConnectionFailedListener(this)
+            .addApi(LocationServices.API)
+            .build();
 
+        mLocationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
       //  var mMapF = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
      //   mMapF.getMapAsync(this)
         // Inflate the layout for this fragment
+
 
         return v
     }

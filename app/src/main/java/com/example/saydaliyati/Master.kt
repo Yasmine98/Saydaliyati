@@ -36,6 +36,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.OnSuccessListener
 
 class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener,     AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener , OnMapReadyCallback, pharmacieFragment.OnListFragmentInteractionListener, mapFragment.OnFragmentInteractionListener{
     lateinit private var toggle : ActionBarDrawerToggle
@@ -43,8 +44,8 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
     var actualFrag : String = "map"
 
     /*** pour le map **/
-    private var mLatitudeTextView: Double = 0.0
-    private var mLongitudeTextView: Double = 0.0
+    private var mLatitudeTextView: Double = 36.7317697
+    private var mLongitudeTextView: Double = 3.1766326
     private var mGoogleApiClient: GoogleApiClient? = null
     private var mLocation: Location? = null
     private var mLocationManager: LocationManager? = null
@@ -82,9 +83,9 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
             .addOnConnectionFailedListener(this)
             .addApi(LocationServices.API)
             .build()
-
+        Log.e("apii","api")
         mLocationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
+        Log.e("locii", "loc")
         Log.d("gggg","uooo");
         checkLocation() //check whether location service is enable or not in your  phone
 
@@ -128,15 +129,32 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
             return
         }
 
-        startLocationUpdates()
-
-        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient)
-
+        //startLocationUpdates()
+          mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient)
+Log.e("cooo", mLocation?.latitude.toString())
         if (mLocation == null) {
+            supportFragmentManager
+                // 3
+                .beginTransaction()
+                // 4
+                .add(R.id.frame_container, mapFragment.newInstance(mLatitudeTextView, mLongitudeTextView), "nearpharma")
+
+                // 5
+                .commitAllowingStateLoss()
             startLocationUpdates()
+
         }
         if (mLocation != null) {
+            mLatitudeTextView = mLocation!!.latitude
+            mLongitudeTextView = mLocation!!.longitude
+            supportFragmentManager
+                // 3
+                .beginTransaction()
+                // 4
+                .add(R.id.frame_container, mapFragment.newInstance(mLatitudeTextView, mLongitudeTextView), "nearpharma")
 
+                // 5
+                .commitAllowingStateLoss()
             // mLatitudeTextView.setText(String.valueOf(mLocation.getLatitude()));
             //mLongitudeTextView.setText(String.valueOf(mLocation.getLongitude()));
         } else {
@@ -210,9 +228,9 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
                .beginTransaction()
                // 4
                .add(R.id.frame_container, mapFragment.newInstance(mLatitudeTextView, mLongitudeTextView), "nearpharma")
-               .addToBackStack(null)
+
                // 5
-               .commit()
+               .commitAllowingStateLoss()
        }
         cptLocUp = cptLocUp + 1
         if(cptLocUp==MaxBeforeUp) cptLocUp = 0
@@ -241,7 +259,7 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
-           // getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+           //getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
             super.onBackPressed()
         }
@@ -253,7 +271,7 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+ /*   override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -261,7 +279,7 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
             R.id.action_settings -> return true
             else -> return super.onOptionsItemSelected(item)
         }
-    }
+    }*/
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
@@ -306,7 +324,7 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
         // To keep states of ActionBar and ActionBarDrawerToggle synchronized,
         // when you enable on one, you disable on the other.
         // And as you may notice, the order for this operation is disable first, then enable - VERY VERY IMPORTANT.
-        if (enable) {
+        if (enable && fragment == "list") {
             //You may not want to open the drawer on swipe from the left in this case
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             // Remove hamburger
@@ -318,18 +336,40 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
             // clicks are disabled i.e. the UP button will not work.
             // We need to add a listener, as in below, so DrawerToggle will forward
             // click events to this listener.
-                toggle.setToolbarNavigationClickListener( {
-                        // Doesn't have to be onBackPressed
-                        onBackPressed()
-                    if(fragment == "list")
-                        enableViews(false, "")
-                    else enableViews(true, "")
+            toggle.setToolbarNavigationClickListener({
+                // Doesn't have to be onBackPressed
+                onBackPressed()
+                enableViews(false, "map")
+                //  if(fragment == "list")
+                //       enableViews(false, "")
+             //   finish();
+             //   startActivity(getIntent());
 
-                    }
-                )
-
+            }
+            )
+        }
                // mToolBarNavigationListenerIsRegistered = true
+            else if (enable && fragment == "detail") {
+                //You may not want to open the drawer on swipe from the left in this case
+                drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                // Remove hamburger
+                toggle.setDrawerIndicatorEnabled(false)
+                // Show back button
 
+                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                // when DrawerToggle is disabled i.e. setDrawerIndicatorEnabled(false), navigation icon
+                // clicks are disabled i.e. the UP button will not work.
+                // We need to add a listener, as in below, so DrawerToggle will forward
+                // click events to this listener.
+                toggle.setToolbarNavigationClickListener( {
+                    // Doesn't have to be onBackPressed
+                    onBackPressed()
+                    //  if(fragment == "list")
+                    //       enableViews(false, "")
+                    enableViews(true, "list")
+
+                }
+                )
 
         } else {
             //You must regain the power of swipe for the drawer.

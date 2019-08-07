@@ -40,7 +40,7 @@ class pharmaDetailFragment : Fragment() {
     ): View? {
         val a = activity as Master
         a?.actualFrag = "detail"
-        prepareDrawer()
+       // prepareDrawer()
    /*     val toolbar = view?.findViewById(R.id.toolbar) as Toolbar
         toolbar.setNavigationIcon(R.drawable.ic_back_button)
         toolbar.setNavigationOnClickListener(View.OnClickListener { activity!!.onBackPressed() })*/
@@ -78,8 +78,8 @@ class pharmaDetailFragment : Fragment() {
         // click events to this listener.
         toggle.setToolbarNavigationClickListener( {
             // Doesn't have to be onBackPressed
-            //activity?.supportFragmentManager?.popBackStack()
-            a.onBackPressed()
+            activity?.supportFragmentManager?.popBackStack()
+           // a.onBackPressed()
 
         }
         )
