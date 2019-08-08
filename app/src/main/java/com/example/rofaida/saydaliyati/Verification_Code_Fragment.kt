@@ -10,17 +10,16 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import android.widget.ProgressBar
-
-
+import com.example.rofaida.saydaliyati.Models.User_details
 
 
 class Verification_Code_Fragment() : Fragment(), View.OnClickListener {
 
-    private lateinit var code:String
     private lateinit var codeSaisi: EditText
     private lateinit var view1:View
     private lateinit var ConfirmCodeButton: Button
     private lateinit var progressBar: ProgressBar
+    private lateinit var client:User_details
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +33,7 @@ class Verification_Code_Fragment() : Fragment(), View.OnClickListener {
         view1 = inflater.inflate(R.layout.fragment_verification__code_, container, false)
         initViews()
         setListeners()
-        code = arguments!!.getString("message")
+        client = arguments!!.getSerializable("user") as User_details
         return view1
     }
 
@@ -57,28 +56,30 @@ class Verification_Code_Fragment() : Fragment(), View.OnClickListener {
 
     private fun validation_Code()
     {
-        /*Toast.makeText(activity, "", Toast.LENGTH_SHORT)
-            .show()*/
         val getCode:String = codeSaisi.text.toString()
         progressBar.setVisibility(View.VISIBLE);
-        if(getCode.equals(code) )
+        if(getCode.equals(client.mdp))
         {
-            Toast.makeText(activity, "Matching to "+code, Toast.LENGTH_SHORT)
+            Toast.makeText(activity, "Matching to "+client.mdp, Toast.LENGTH_SHORT)
             .show()
             progressBar.setVisibility(View.GONE);
             // Replace forgot password fragment with animation
+            var bundle:Bundle = Bundle()
+            bundle.putSerializable("user", client)
+            val fragment_new:Fragment = Initialize_Password_Fragment()
+            fragment_new.arguments = bundle
             fragmentManager!!.beginTransaction()
                 .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
                 .replace(
                     R.id.frameContainer,
-                    Initialize_Password_Fragment(),
+                    fragment_new,
                     Utils.Initialize_Password_Fragment
                 ).commit()
         }
         else
         {
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(activity, "Not matching to "+code, Toast.LENGTH_SHORT)
+            Toast.makeText(activity, "Not matching to "+client.mdp, Toast.LENGTH_SHORT)
                 .show()
         }
     }

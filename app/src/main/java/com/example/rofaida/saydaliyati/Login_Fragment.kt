@@ -1,6 +1,7 @@
 package com.example.rofaida.saydaliyati
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import java.util.regex.Pattern
 
 import android.content.res.ColorStateList
@@ -23,6 +24,11 @@ import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.rofaida.saydaliyati.Interfaces.RetrofitService
+import com.example.rofaida.saydaliyati.Models.User_details
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Login_Fragment : Fragment(), OnClickListener {
 
@@ -35,6 +41,7 @@ class Login_Fragment : Fragment(), OnClickListener {
     private lateinit var loginLayout: LinearLayout
     private lateinit var shakeAnimation: Animation
     private lateinit var fragmentManager1: FragmentManager
+    private lateinit var user:User_details
     private lateinit var view1:View
 
 
@@ -133,13 +140,26 @@ class Login_Fragment : Fragment(), OnClickListener {
             R.id.forgot_password ->
 
                 // Replace forgot password fragment with animation
-                fragmentManager!!.beginTransaction()
+                /*fragmentManager!!.beginTransaction()
                     .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
                     .replace(
                         R.id.frameContainer,
                         ForgotPassword_Fragment(),
                         Utils.ForgotPassword_Fragment
-                    ).commit()
+                    ).commit()*/
+
+                /*fragmentManager!!.beginTransaction()
+                    .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                    .replace(
+                        R.id.frameContainer,
+                        Add_command_Fragment(),
+                        Utils.Add_command_Fragment
+                    ).commit() */
+                    {
+                val intent: Intent = Intent(getActivity(), Add_Commande::class.java)
+                startActivity(intent)
+            }
+
             R.id.createAccount ->
 
                 // Replace signup frgament with animation
@@ -181,11 +201,43 @@ class Login_Fragment : Fragment(), OnClickListener {
                 this.context!!, view1,
                 "Votre Numéro de Téléphone est invalide."
             )
-        else
-            Toast.makeText(this.context, "Do Login.", Toast.LENGTH_SHORT)
-                .show()// Else do login and do your stuff
-        // Check if email id is valid or not
+        else {
+            // Check if email id is valid or not
+            var credentials: User_details = User_details(0, "", "", "", getPhoneId, getPassword, "")
+            Login_method(credentials)
+        }
 
+    }
+
+    private fun Login_method(credentials:User_details)
+    {
+        val call = RetrofitService.endpoint.getUserLogin(credentials)
+        call.enqueue(object : Callback<List<User_details>> {
+            override fun onFailure(call: Call<List<User_details>>, t: Throwable) {
+                Toast.makeText(this@Login_Fragment.context, "erreur retrofit", Toast.LENGTH_LONG).show()
+                t.printStackTrace()
+            }
+
+            override fun onResponse(call: Call<List<User_details>>, response: Response<List<User_details>>) {
+                if(response.body()!!.get(0).nom.equals(""))
+                {
+                    Toast.makeText(
+                        this@Login_Fragment.context,
+                        "Wrong Credentials.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                else {
+                    user = response.body()!!.get(0)
+                    Toast.makeText(
+                        this@Login_Fragment.context,
+                        "Welcome to Saydaliyati : " + user.prenom,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+
+        })
     }
 
 }

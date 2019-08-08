@@ -12,6 +12,9 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.example.rofaida.saydaliyati.Interfaces.RetrofitService
+import com.example.rofaida.saydaliyati.Models.Client
+import com.example.rofaida.saydaliyati.Models.User_details
 import com.google.android.gms.tasks.RuntimeExecutionException
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -84,6 +87,8 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
         terms_conditions = view1.findViewById<View>(R.id.terms_conditions) as CheckBox
         progressBar_ = view1.findViewById(R.id.progressBar2) as ProgressBar
 
+        progressBar_.setVisibility(View.GONE)
+
         // Setting text selector over textviews
         val xrp = getResources().getXml(R.drawable.text_selector)
         try {
@@ -140,13 +145,35 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
                 this.context!!, view1,
                 "Sélectionnez les termes et conditions")
         else {
-            Toast.makeText(activity, "Do SignUp.", Toast.LENGTH_SHORT)
-                .show()// Else do signup or do your stuff
-            // Make sure user should check Terms and Conditions checkbox
-            // Check if both password should be equal
-            // Check if email id valid or not
+            val mdp = generatePassword()
+            val client: Client = Client(getNSS.toInt(), getLastName, getFirstName, getLocation, getMobileNumber, mdp, "")
+            val return_client: User_details = User_details(getNSS.toInt(), getLastName, getFirstName, getLocation, getMobileNumber, mdp, "")
+            progressBar_.visibility = View.VISIBLE
+            val call = RetrofitService.endpoint.addUser(client)
+            call.enqueue(object : Callback<String> {
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    progressBar_.visibility = View.INVISIBLE
+                    Log.e("erreur retrofit", t.toString())
+                    Toast.makeText(this@SignUp_Fragment.context, "erreur retrofit", Toast.LENGTH_LONG).show()
+                }
 
-            sendMessage(getMobileNumber)
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    if(response.body().equals("SUCCESS"))
+                    {
+                        progressBar_.visibility = View.INVISIBLE
+                        val resp:String = response.body()!!
+                        Toast.makeText(this@SignUp_Fragment.context ,resp+", Vous allez recevoir un code de vérification ", Toast.LENGTH_LONG).show()
+                        sendMessage(getMobileNumber,return_client)
+                    }
+                    else
+                    {
+                        progressBar_.visibility = View.INVISIBLE
+                        Toast.makeText(this@SignUp_Fragment.context, "erreur retrofit", Toast.LENGTH_LONG).show()
+
+                    }
+                }
+
+            })
 
         }
 
@@ -161,10 +188,11 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
         return password_
     }
 
-    private fun sendMessage(to:String)
+    private fun sendMessage(to:String, client:User_details)
     {
-        val body = generatePassword()
+        val body = "Votre Mot de Passe du compte Saydaliyati est :"+client.mdp
         val from = "+18162826468"
+        val to = "+213793740560"
 
         val base64EncodedCredentials = "Basic " + Base64.encodeToString((ACCOUNT_SID + ":" + AUTH_TOKEN).toByteArray(), Base64.NO_WRAP)
         val smsData = mutableMapOf<String, String>()
@@ -173,11 +201,11 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
         smsData.put("To", to);
         smsData.put("Body", body);
 
+        progressBar_.setVisibility(View.VISIBLE)
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.twilio.com/2010-04-01/")
             .build()
         val api = retrofit.create(TwilioApi::class.java)
-        progressBar_.setVisibility(View.VISIBLE)
         api.sendMessage(ACCOUNT_SID, base64EncodedCredentials, smsData).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d("TAG", "onFailure")
@@ -191,10 +219,10 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
                 {
                     progressBar_.setVisibility(View.GONE)
                     Log.d("TAG", "onResponse->success")
-                    var code:Bundle = Bundle()
-                    code.putString("message", body)
+                    var bundle:Bundle = Bundle()
+                    bundle.putSerializable("user", client)
                     val fragment_new:Fragment = Verification_Code_Fragment()
-                    fragment_new.arguments = code
+                    fragment_new.arguments = bundle
                     fragmentManager!!.beginTransaction()
                         .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
                         .replace(
