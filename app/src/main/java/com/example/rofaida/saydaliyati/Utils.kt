@@ -16,5 +16,6 @@ object Utils {
     val Initialize_Password_Fragment = "fragment_initialize__password_"
     val Home_Fragment = "fragment_home"
     val Add_command_Fragment = "fragment_add_command_"
+    val Ordonnances_Fragment = "fragment_ordonnances"
 
 }

@@ -219,7 +219,7 @@ class Login_Fragment : Fragment(), OnClickListener {
             }
 
             override fun onResponse(call: Call<List<User_details>>, response: Response<List<User_details>>) {
-                if(response.body()!!.get(0).nom.equals(""))
+                if(response.body()!!.size == 0)
                 {
                     Toast.makeText(
                         this@Login_Fragment.context,
@@ -234,6 +234,17 @@ class Login_Fragment : Fragment(), OnClickListener {
                         "Welcome to Saydaliyati : " + user.prenom,
                         Toast.LENGTH_LONG
                     ).show()
+                    var bundle:Bundle = Bundle()
+                    bundle.putSerializable("user", user)
+                    val fragment_new:Fragment = Ordonnances_Fragment()
+                    fragment_new.arguments = bundle
+                    fragmentManager!!.beginTransaction()
+                        .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                        .replace(
+                            R.id.frameContainer,
+                            fragment_new,
+                            Utils.Ordonnances_Fragment
+                        ).commit()
                 }
             }
 

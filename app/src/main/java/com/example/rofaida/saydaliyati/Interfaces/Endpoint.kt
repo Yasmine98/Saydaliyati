@@ -45,7 +45,10 @@ interface Endpoint {
     @PUT("updateUserPswd")
     fun updateUserPswd(@Body client: User_details): Call<String>
 
-    @GET("getUserLogin/{user}")
-    fun getUserLogin(@Path("user") isbn:User_details):Call<List<User_details>>
+   // @GET("getUserLogin/{user}")
+    //fun getUserLogin(@Path("user") isbn:User_details):Call<List<User_details>>
+
+    @POST("getUserLogin")
+    fun getUserLogin(@Body client: User_details):Call<List<User_details>>
 
 }

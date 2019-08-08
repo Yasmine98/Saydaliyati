@@ -7,9 +7,10 @@ import androidx.room.PrimaryKey
 data class Commande (
     @PrimaryKey
     var id:Int,
+    var titre:String,
     var etat:String,
-    var photo:String,
-    var idclient:String,
+    var photo:Int,
+    var idclient:Int,
     var idpharma:String,
     var idfacture:String
 )
