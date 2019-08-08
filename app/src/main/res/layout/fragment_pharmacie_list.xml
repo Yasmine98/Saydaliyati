@@ -11,4 +11,4 @@
         android:layout_marginRight="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:context="com.example.saydaliyati.pharmacieFragment"
-        tools:listitem="@layout/fragment_pharmacie" android:background="@android:color/white"/>
+        tools:listitem="@layout/fragment_pharmacie"/>

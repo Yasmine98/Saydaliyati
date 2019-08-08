@@ -18,6 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.content.Intent
+import android.widget.EditText
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -68,9 +69,10 @@ class pharmacieFragment : Fragment() {
         val a = activity as Master
         a?.actualFrag = "list"
         // mToolBarNavigationListenerIsRegistered = true
+      //  val edit = a.findViewById(R.id.villeNom) as EditText
 
-
-
+       // if (edit?.text.toString()!= "")  ville = edit?.text.toString()
+       // Log.e("villlle",edit?.text.toString() )
         val call = RetrofitService.endpoint.pharma_vile(ville)
         // progressBar.visibility = View.VISIBLE
         call.enqueue(object: Callback<List<pharmacie>> {

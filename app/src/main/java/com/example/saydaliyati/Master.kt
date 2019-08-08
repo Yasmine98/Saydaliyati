@@ -18,6 +18,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -284,7 +285,9 @@ Log.e("cooo", mLocation?.latitude.toString())
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
+            R.id.nav_Pharma -> {
+                val f = mapFragment.newInstance(mLatitudeTextView, mLongitudeTextView) as Fragment
+                replaceFragment(f)
                 // Handle the camera action
             }
             R.id.nav_gallery -> {
@@ -405,7 +408,10 @@ Log.e("cooo", mLocation?.latitude.toString())
 
     override fun onFragmentInteraction(uri: String){
         Log.e("erreur frag ", "enter")
-        val f = pharmacieFragment.newInstance(1, "Alger") as Fragment
+          val edit = findViewById(R.id.villeNom) as EditText
+        var villeArg = "Alger"
+         if (edit?.text.toString()!= "")  villeArg = edit?.text.toString()
+        val f = pharmacieFragment.newInstance(1, villeArg) as Fragment
         replaceFragment(f)
         actualFrag = "list"
         enableViews(true, "list")
