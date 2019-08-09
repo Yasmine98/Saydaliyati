@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_margin="10dp"
+        android:elevation="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/ordonnance_photo"
+                    android:src="@drawable/not_found"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"/>
+
+            <TextView
+                    android:id="@+id/commande_titre"
+                    android:text="Enter blog title..."
+                    android:textSize="15sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_toRightOf="@+id/ordonnance_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_marginTop="3dp" android:layout_marginStart="7dp"
+                    android:layout_marginEnd="7dp" android:layout_marginBottom="2dp"/>
+
+            <TextView
+                    android:id="@+id/pharmacie"
+                    android:text="Enter blog author name..."
+                    android:textSize="14sp"
+                    android:layout_marginLeft="7dp"
+                    android:textColor="@android:color/darker_gray"
+                    android:textStyle="italic"
+                    android:layout_below="@+id/commande_titre"
+                    android:layout_toRightOf="@+id/ordonnance_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                    android:id="@+id/status"
+                    android:layout_below="@+id/pharmacie"
+                    android:layout_toRightOf="@+id/ordonnance_photo"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="3dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <ImageView
+                            android:id="@+id/status_image"
+                            android:src="@drawable/pending"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitXY"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+
+                    <TextView
+                            android:id="@+id/status_commande"
+                            android:text="hello there"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:textSize="14sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <TextView
+                    android:id="@+id/detail_commande"
+                    android:text="Détails.."
+                    android:textAllCaps="false"
+                    android:textStyle="italic"
+                    android:layout_below="@+id/status"
+                    android:layout_toRightOf="@+id/ordonnance_photo"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textSize="12sp" android:layout_marginTop="7dp"
+                    android:layout_marginStart="7dp" android:layout_marginEnd="7dp" android:layout_marginBottom="7dp"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

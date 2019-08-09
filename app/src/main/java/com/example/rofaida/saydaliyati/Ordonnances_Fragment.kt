@@ -1,15 +1,29 @@
 package com.example.rofaida.saydaliyati
 
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rofaida.saydaliyati.Interfaces.RetrofitService
 import com.example.rofaida.saydaliyati.Models.Commande
 import com.example.rofaida.saydaliyati.Views.CommandeAdapter
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 
 
 class Ordonnances_Fragment : Fragment() {
@@ -20,38 +34,6 @@ class Ordonnances_Fragment : Fragment() {
     private var commandeAdapter: CommandeAdapter? = null
     private lateinit var view1:View
 
-    private val titles = arrayOf(
-        "PHP for the beginners",
-        "iOS developer tutorial",
-        "Learn Java for free",
-        "Become Android programmer",
-        "Python for data analysis",
-        "PHP for the beginners",
-        "iOS developer tutorial",
-        "Learn Java for free"
-    )
-    private val authors = arrayOf(
-        "Asif Khan",
-        "Tanvir Ahmed",
-        "Nafis Iqbal",
-        "Rahim Islam",
-        "Abir Hasan",
-        "Asif Khan",
-        "Tanvir Ahmed",
-        "Nafis Iqbal"
-    )
-    private val photos = intArrayOf(
-        R.drawable.sample_5,
-        R.drawable.sample_1,
-        R.drawable.sample_6,
-        R.drawable.sample_5,
-        R.drawable.sample_5,
-        R.drawable.sample_0,
-        R.drawable.sample_2,
-        R.drawable.sample_3
-    )
-
-    private val likes = intArrayOf(10, 20, 30, 40, 50, 60, 15, 22)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,26 +50,114 @@ class Ordonnances_Fragment : Fragment() {
         commandes = ArrayList()
         show_commandes = view1.findViewById(R.id.list_ordonnances) as RecyclerView
         var linearLayoutManager:LinearLayoutManager = LinearLayoutManager(this.context!!)
-        commandeAdapter = CommandeAdapter(commandes!!, this.context!!)
-        show_commandes!!.adapter = commandeAdapter
         show_commandes!!.layoutManager = linearLayoutManager
-        getBlogs()
+        getCommandes()
     }
 
-    // getting all the blogs
-    private fun getBlogs() {
-        for (count in titles.indices) {
-            commandes!!.add(
-                Commande(
-                    0,
-                    titles[count],
-                    "pending",
-                    photos[count],
-                    0,
-                    authors[count],
-                    ""
-                )
-            )
+
+
+    // getting all the orders
+    private fun getCommandes() {
+        val call = RetrofitService.endpoint.getCommandes()
+        call.enqueue(object : Callback<ArrayList<Commande>>
+        {
+            override fun onFailure(call: Call<ArrayList<Commande>>, t: Throwable) {
+                Toast.makeText(this@Ordonnances_Fragment.context, "Commande ajoutée avec succès", Toast.LENGTH_SHORT).show()
+                t.printStackTrace()
+            }
+
+            override fun onResponse(call: Call<ArrayList<Commande>>, response: Response<ArrayList<Commande>>) {
+                if (response?.isSuccessful!!){
+                    for(i in response.body()!!)
+                    {
+                        commandes!!.add(i)
+                    }
+                    commandeAdapter = CommandeAdapter(commandes!!, this@Ordonnances_Fragment.context!!)
+                    show_commandes!!.adapter = commandeAdapter
+                    Toast.makeText(this@Ordonnances_Fragment.context, "Loaded :"+commandes!!.get(0).etat, Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    Toast.makeText(this@Ordonnances_Fragment.context, "Erreur", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        })
+    }
+
+    /********************************* Get Images ********************************************/
+
+    fun getRetrofitImage(url:String, path:String) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val call = RetrofitService.endpoint.getImageDetails(path)
+        call.enqueue(object: Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: retrofit2.Response<ResponseBody>) {
+                try
+                {
+                    Log.d("onResponse", "Response came from server")
+                    val FileDownloaded = DownloadImage(response.body()!!, path)
+                    Log.d("onResponse", "Image is downloaded and saved ? " + FileDownloaded)
+                }
+                catch (e:Exception) {
+                    Log.d("onResponse", "There is an error")
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("onFailure", t.toString())
+            }
+
+        })
+    }
+
+    private fun DownloadImage(body: ResponseBody, path:String):String {
+        try
+        {
+            Log.d("DownloadImage", "Reading and writing file")
+            var `in`: InputStream? = null
+            var out: FileOutputStream? = null
+            try
+            {
+                `in` = body.byteStream()
+                out = FileOutputStream(this.context!!.getExternalFilesDir("").toString()+ File.separator + path)
+                var c:Int
+                c = `in`.read()
+                while (c != -1)
+                {
+                    out!!.write(c)
+                    c = `in`.read()
+                }
+            }
+            catch (e: IOException) {
+                Log.d("DownloadImage", e.toString())
+                return ""
+            }
+            finally
+            {
+                if (`in` != null)
+                {
+                    `in`.close()
+                }
+                if (out != null)
+                {
+                    out.close()
+                }
+            }
+            //val width:Int
+            //val height:Int
+            //val image = findViewById(R.id.IdProf) as ImageView
+            //val bMap = BitmapFactory.decodeFile(this.context!!.getExternalFilesDir("").toString() + File.separator + path)
+            //image.setImageBitmap(bMap)
+            return this.context!!.getExternalFilesDir("").toString() + File.separator + path
+        }
+        catch (e: IOException) {
+            Log.d("DownloadImage", e.toString())
+            return ""
         }
     }
 

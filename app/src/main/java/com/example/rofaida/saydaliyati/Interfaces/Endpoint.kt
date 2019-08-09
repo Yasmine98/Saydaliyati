@@ -3,6 +3,7 @@ package com.example.rofaida.saydaliyati.Interfaces
 import com.example.rofaida.saydaliyati.Models.Client
 import com.example.rofaida.saydaliyati.Models.Commande
 import com.example.rofaida.saydaliyati.Models.User_details
+import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -23,7 +24,7 @@ interface Endpoint {
     /**** Image API ****/
     @Multipart
     @POST("/upload")
-    fun postImage(@Part image: MultipartBody.Part, @Part("upload") name: RequestBody): Call<ResponseBody>
+    fun postImage(@Part image: MultipartBody.Part, @Part("upload") name: RequestBody): Call<String>
 
     @GET("uploads/{image}")
     fun getImageDetails(@Path("image") isbn:String): Call<ResponseBody>
@@ -50,5 +51,11 @@ interface Endpoint {
 
     @POST("getUserLogin")
     fun getUserLogin(@Body client: User_details):Call<List<User_details>>
+
+    @GET("getMaxCommandeID")
+    fun getMaxCommandeID(): Call<Int>
+
+    @GET("getCommandes")
+    fun getCommandes(): Call<ArrayList<Commande>>
 
 }

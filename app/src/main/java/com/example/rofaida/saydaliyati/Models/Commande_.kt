@@ -4,14 +4,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName ="commande" )
-data class Commande(
+data class Commande_ (
     @PrimaryKey
     var id:Int,
     var titre:String,
     var etat:String,
-    var photo:String,
+    var photo:Int,
     var idclient:Int,
-    var idpharma:Int,
-    var pharma_nom:String,
-    var idfacture: Int?
+    var idpharma:String,
+    var idfacture:String
 )
