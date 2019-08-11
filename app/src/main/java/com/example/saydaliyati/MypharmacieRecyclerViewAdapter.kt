@@ -51,6 +51,7 @@ class MypharmacieRecyclerViewAdapter(
         holder.mIdView.text = item.id.toString()
         holder.mContentView.text = item.adrpost
         holder.mNom.text = item.nom
+        holder.mHour.text = "Ouverte de "+item.ho + " à "+item.hf
 
         with(holder.mView) {
             tag = item
@@ -64,7 +65,9 @@ class MypharmacieRecyclerViewAdapter(
         val mIdView: TextView = mView.item_number
         val mContentView: TextView = mView.content
         val mNom : TextView = mView.nom
-        val mImg : ImageView = mView.image
+        val mImg : ImageView = mView.bar
+        val mHour : TextView = mView.hour
+
         override fun toString(): String {
             return super.toString() + " '" + mNom.text + "'"
         }

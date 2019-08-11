@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.saydaliyati">
+          package="com.example.saydaliyati"
+        >
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -24,8 +25,13 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".testCurrent">
+        <activity
+                android:name=".GetStarted"
+                android:label="@string/title_activity_get_started"
+                android:theme="@style/AppTheme.NoActionBar">
 
+        </activity>
+        <activity android:name=".testCurrent">
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -42,8 +48,8 @@
         <activity
                 android:name=".Master"
                 android:label="@string/title_activity_master"
-                android:theme="@style/AppTheme.NoActionBar"
-                android:screenOrientation="portrait">
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -52,9 +58,7 @@
 
         </activity>
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
+
         </activity>
     </application>
 

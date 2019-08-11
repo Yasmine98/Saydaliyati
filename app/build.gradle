@@ -9,12 +9,20 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.tp2"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    repositories {
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+    }
+
+    
     buildTypes {
         release {
             minifyEnabled false
@@ -22,6 +30,7 @@ android {
         }
     }
 }
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -58,7 +67,21 @@ dependencies {
 
     // Google Maps Android API Utility Library
     implementation 'com.google.maps.android:android-maps-utils:0.5'
-     implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
 
     implementation 'com.mcxiaoke.volley:library-aar:1.0.0'
+    def work_version = "2.0.1"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    //Material Design
+    api 'com.google.android.material:material:1.1.0-alpha06'
+    //implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //profile test
+    implementation 'com.alexzh:circleimageview:1.1.2@aar'
+    implementation 'com.github.rey5137:material:1.2.2'
+    implementation 'com.mikhaellopez:circularimageview:2.0.1'
+    implementation 'com.makeramen:roundedimageview:2.2.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
 }

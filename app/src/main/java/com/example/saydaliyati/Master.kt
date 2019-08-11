@@ -19,12 +19,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.work.*
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
@@ -110,10 +112,13 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
        toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
+
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        synchronizePharma()//Pour supprimé de room les pharmacies qui n'existnt plus sur le serveur
 
     }
 
@@ -421,7 +426,7 @@ Log.e("cooo", mLocation?.latitude.toString())
     override fun onListFragmentInteraction(item: pharmacie?){
         Log.e("erreur frag ", "enter")
         // 2
-        Toast.makeText(this.applicationContext, "helloo"+item?.id, Toast.LENGTH_LONG).show()
+      //  Toast.makeText(this.applicationContext, "helloo"+item?.id, Toast.LENGTH_LONG).show()
         //  drawer_layout.removeDrawerListener()
         val f = pharmaDetailFragment.newInstance(item) as Fragment
         replaceFragment(f)
@@ -441,5 +446,18 @@ Log.e("cooo", mLocation?.latitude.toString())
 
     }
 
+
+    private fun synchronizePharma() {
+
+        val constraints: Constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        val request: OneTimeWorkRequest = OneTimeWorkRequest.Builder(SynchroWorker::class.java)
+
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance().enqueue(request)
+    }
 
 }

@@ -174,8 +174,8 @@ class mapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCa
                     mMap?.let {
                         it.addMarker(MarkerOptions().position(LatLng(param1, param2)).title("Je suis là!"))
 
-                        it.moveCamera(CameraUpdateFactory.newLatLng(LatLng(param1, param2)))
-                        it.animateCamera(CameraUpdateFactory.zoomTo(14.0f), 2000, null);
+                       // it.moveCamera(CameraUpdateFactory.newLatLng(LatLng(param1, param2)))
+                       // it.animateCamera(CameraUpdateFactory.zoomTo(14.0f), 2000, null);
 
                     }
                     for(p in nearPharma.listNearPharma)
@@ -188,7 +188,23 @@ class mapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCa
                 override fun onFailure(call: Call<List<pharmacie>>?, t: Throwable?) {
                     //   progressBar.visibility = View.INVISIBLE
                     Log.e("erreur retrofit", t. toString())
-                    Toast.makeText(getActivity()?.getApplicationContext(), "failure", Toast.LENGTH_LONG).show()
+                    Toast.makeText(getActivity()?.getApplicationContext(), "Impossible d'accèder au serveur", Toast.LENGTH_LONG).show()
+                     list = AppDatabase.getInstance(activity!!.applicationContext).getPharmaDao().getpharma()
+                    nearPharma.fill(param1, param2, list)
+                    val dhaka = LatLng(23.777176, 90.399452)
+                    mMap?.let {
+                        it.addMarker(MarkerOptions().position(LatLng(param1, param2)).title("Je suis là!"))
+
+                       // it.moveCamera(CameraUpdateFactory.newLatLng(LatLng(param1, param2)))
+                        //it.animateCamera(CameraUpdateFactory.zoomTo(14.0f), 2000, null);
+
+                    }
+                    for(p in nearPharma.listNearPharma)
+                    {
+                        val coord  = LatLng(p.value.lat, p.value.longi)
+                        mMap?.let{it.addMarker(MarkerOptions().position(coord).title(p.value.nom))}
+                    }
+
                 }
             })
 

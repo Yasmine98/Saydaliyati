@@ -87,7 +87,7 @@ class pharmacieFragment : Fragment() {
                         list_name[i] = list[i].nom
                     }
                     val view = v
-                    Toast.makeText(getActivity()?.getApplicationContext(), list_name[0], Toast.LENGTH_LONG).show()
+                   // Toast.makeText(getActivity()?.getApplicationContext(), list_name[0], Toast.LENGTH_LONG).show()
 
                     // Set the adapter
                     if (view is RecyclerView) {
@@ -107,7 +107,28 @@ class pharmacieFragment : Fragment() {
             override fun onFailure(call: Call<List<pharmacie>>?, t: Throwable?) {
                 //   progressBar.visibility = View.INVISIBLE
                 Log.e("erreur retrofit", t. toString())
-                Toast.makeText(getActivity()?.getApplicationContext(), "failure", Toast.LENGTH_LONG).show()
+                //Toast.makeText(getActivity()?.getApplicationContext(), "Impossible d'accèder au serveur", Toast.LENGTH_LONG).show()
+
+                val list:List<pharmacie> = AppDatabase.getInstance(activity!!.applicationContext).getPharmaDao().getpharmaByville(ville_name = ville)
+                val list_name = MutableList<String>(list.size){""}
+                for(i in 0 until list.size){
+                    list_name[i] = list[i].nom
+                }
+                val view = v
+             //   Toast.makeText(getActivity()?.getApplicationContext(), list_name[0], Toast.LENGTH_LONG).show()
+
+                // Set the adapter
+                if (view is RecyclerView) {
+                    with(view) {
+                        layoutManager = when {
+                            columnCount <= 1 -> androidx.recyclerview.widget.LinearLayoutManager(context)
+                            else -> androidx.recyclerview.widget.GridLayoutManager(context, columnCount)
+                        }
+                        adapter = com.example.saydaliyati.MypharmacieRecyclerViewAdapter(list, listener)
+
+                    }
+                }
+
             }
         })
 

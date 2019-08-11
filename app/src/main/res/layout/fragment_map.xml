@@ -20,19 +20,20 @@
 
         </FrameLayout>
         <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="224dp"
-                android:layout_height="48dp" android:layout_marginBottom="30dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content" android:layout_marginBottom="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginLeft="20dp" android:layout_marginStart="20dp"
-                android:id="@+id/textInputLayout">
+                android:id="@+id/textInputLayout" app:layout_constraintEnd_toStartOf="@+id/viewPharma"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Entrer le nom d'une ville" android:id="@+id/villeNom"/>
         </com.google.android.material.textfield.TextInputLayout>
-        <Button
+        <com.google.android.material.button.MaterialButton
                 android:text="AFFICHER"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/viewPharma" android:layout_weight="1"
