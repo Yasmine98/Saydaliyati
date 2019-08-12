@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         // If savedinstnacestate is null then replace login fragment
         if (savedInstanceState == null) {
             fragmentManager!!.beginTransaction()
-                .replace(R.id.frameContainer, Login_Fragment(),
+                .replace(R.id.frameContainer2, Login_Fragment(),
                     Utils.Login_Fragment
                 ).commit()
         }
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             fragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.left_enter, R.anim.right_out)
                 .replace(
-                    R.id.frameContainer, Login_Fragment(),
+                    R.id.frameContainer2, Login_Fragment(),
                     Utils.Login_Fragment
                 ).commit()
         }else

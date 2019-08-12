@@ -10,5 +10,6 @@ class Commande_details(
     var idclient:Int,
     var idpharma:Int,
     var pharma_nom:String,
-    var idfacture: Int?
+    var idfacture: Int?,
+    var motifRefus:String
 ) : Serializable {}

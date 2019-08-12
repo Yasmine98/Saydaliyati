@@ -19,4 +19,6 @@ object Utils {
     val Ordonnances_Fragment = "fragment_ordonnances"
     val Commande_accepted_details = "fragment_commande_accepted_details"
     val Commande_pending_details = "fragment_commande_pending_details"
+    val Commande_refused_details = "fragment_commande_refused_details"
+    val Menu_fragment = "fragment_menu_fragment"
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rofaida.saydaliyati.Interfaces.RetrofitService
 import com.example.rofaida.saydaliyati.Models.Commande
+import com.example.rofaida.saydaliyati.Models.User_details
 import com.example.rofaida.saydaliyati.Views.CommandeAdapter
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -32,7 +33,9 @@ class Ordonnances_Fragment : Fragment() {
     private var show_commandes: RecyclerView? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     private var commandeAdapter: CommandeAdapter? = null
+
     private lateinit var view1:View
+    private lateinit var user:User_details
 
 
     override fun onCreateView(
@@ -41,6 +44,7 @@ class Ordonnances_Fragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         view1 = inflater.inflate(R.layout.fragment_ordonnances, container, false)
+        user = arguments!!.getSerializable("user") as User_details
         initViews()
         //setListeners()
         return view1
@@ -62,7 +66,7 @@ class Ordonnances_Fragment : Fragment() {
         call.enqueue(object : Callback<ArrayList<Commande>>
         {
             override fun onFailure(call: Call<ArrayList<Commande>>, t: Throwable) {
-                Toast.makeText(this@Ordonnances_Fragment.context, "Commande ajoutée avec succès", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@Ordonnances_Fragment.context, "Commande non ajoutée, failure", Toast.LENGTH_SHORT).show()
                 t.printStackTrace()
             }
 

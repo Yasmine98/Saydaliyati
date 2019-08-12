@@ -2,8 +2,8 @@ package com.example.rofaida.saydaliyati.Interfaces
 
 import com.example.rofaida.saydaliyati.Models.Client
 import com.example.rofaida.saydaliyati.Models.Commande
+import com.example.rofaida.saydaliyati.Models.Facture
 import com.example.rofaida.saydaliyati.Models.User_details
-import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -11,7 +11,6 @@ import retrofit2.Call
 import retrofit2.http.*
 import retrofit2.http.PUT
 import retrofit2.http.FormUrlEncoded
-
 
 
 
@@ -30,6 +29,7 @@ interface Endpoint {
     fun getImageDetails(@Path("image") isbn:String): Call<ResponseBody>
 
     /**** Twilio API***/
+
     @FormUrlEncoded
     @POST("Accounts/{ACCOUNT_SID}/SMS/Messages")
     fun sendMessage(
@@ -46,8 +46,8 @@ interface Endpoint {
     @PUT("updateUserPswd")
     fun updateUserPswd(@Body client: User_details): Call<String>
 
-   // @GET("getUserLogin/{user}")
-    //fun getUserLogin(@Path("user") isbn:User_details):Call<List<User_details>>
+    @GET("getFacture/{idCmd}")
+    fun getFacture(@Path("idCmd") isbn:Int):Call<List<Facture>>
 
     @POST("getUserLogin")
     fun getUserLogin(@Body client: User_details):Call<List<User_details>>
@@ -57,5 +57,9 @@ interface Endpoint {
 
     @GET("getCommandes")
     fun getCommandes(): Call<ArrayList<Commande>>
+
+    /**** Braintree Integration ***/
+
+
 
 }

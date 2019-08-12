@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.rofaida.saydaliyati.Interfaces.RetrofitService
 import com.example.rofaida.saydaliyati.Models.Commande
-import com.example.rofaida.saydaliyati.R
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,11 +27,9 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import com.bumptech.glide.request.RequestOptions
-import com.example.rofaida.saydaliyati.Commande_pending_details
+import com.example.rofaida.saydaliyati.*
 import com.example.rofaida.saydaliyati.Models.Commande_details
 import com.example.rofaida.saydaliyati.Models.EtatCommande
-import com.example.rofaida.saydaliyati.Utils
-import com.example.rofaida.saydaliyati.Verification_Code_Fragment
 
 
 class CommandeAdapter(
@@ -111,21 +108,50 @@ inner class DataHolder(itemView: View, var context: Context, var commandes: Arra
             commande.etat,
             commande.photo,
             commande.idclient,
-            commande.idpharma, commande.pharma_nom,commande.idfacture
+            commande.idpharma, commande.pharma_nom,commande.idfacture,""
         )
         Toast.makeText(context, commande.titre, Toast.LENGTH_SHORT).show()
         //Show commande details
         var bundle: Bundle = Bundle()
         bundle.putSerializable("commande", commande_)
-        val fragment_new: Fragment = Commande_pending_details()
-        fragment_new.arguments = bundle
-        fragmentManager_!!.beginTransaction()
-            .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-            .replace(
-                R.id.frameContainer,
-                fragment_new,
-                Utils.Verification_Code_Fragment
-            ).commit()
+        if(commande.etat.equals(EtatCommande.pending.etat))
+        {
+            val fragment_new: Fragment = Commande_pending_details()
+            fragment_new.arguments = bundle
+            fragmentManager_!!.beginTransaction()
+                .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                .replace(
+                    R.id.frameContainer,
+                    fragment_new,
+                    Utils.Commande_pending_details
+                ).commit()
+        }
+
+        else if (commande.etat.equals(EtatCommande.accepted.etat))
+        {
+            val fragment_new: Fragment = Commande_accepted_details()
+            fragment_new.arguments = bundle
+            fragmentManager_!!.beginTransaction()
+                .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                .replace(
+                    R.id.frameContainer,
+                    fragment_new,
+                    Utils.Commande_accepted_details
+                ).commit()
+        }
+
+        else if (commande.etat.equals(EtatCommande.refused.etat))
+        {
+            val fragment_new: Fragment = Commande_refused_details()
+            fragment_new.arguments = bundle
+            fragmentManager_!!.beginTransaction()
+                .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                .replace(
+                    R.id.frameContainer,
+                    fragment_new,
+                    Utils.Commande_refused_details
+                ).commit()
+        }
     }
 
 }

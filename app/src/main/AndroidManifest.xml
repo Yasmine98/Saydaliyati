@@ -26,9 +26,11 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".Photo_viewer_activity">
+        <activity android:name=".Payement_Activity">
         </activity>
-        <activity android:name=".Test_activity">
+        <activity android:name=".Menu_Activity">
+        </activity>
+        <activity android:name=".Photo_viewer_activity">
         </activity>
 
         <provider

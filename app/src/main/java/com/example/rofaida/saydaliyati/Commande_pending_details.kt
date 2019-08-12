@@ -16,8 +16,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.rofaida.saydaliyati.Models.Commande_details
 import com.squareup.picasso.Picasso
 import android.content.Intent
-
-
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.rofaida.saydaliyati.Models.EtatCommande
 
 
 class Commande_pending_details : Fragment(), View.OnClickListener {
@@ -59,6 +59,9 @@ class Commande_pending_details : Fragment(), View.OnClickListener {
         pharma_name_.setText(commande!!.pharma_nom)
         pharma_adr_.setText("Adresse Pharmacie")
         commande_etat_.setText(commande!!.etat)
+
+        commande_etat_.setTextColor(this.context!!.resources.getColor(R.color.pending_blue))
+
         date_commande_.setText("Date Now")
         val options = RequestOptions()
             .centerCrop()
