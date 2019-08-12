@@ -170,19 +170,13 @@ class mapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCa
                     //  progressBar.visibility = View.INVISIBLE
                     list = response.body()!!
                     nearPharma.fill(param1, param2, list)
-                    val dhaka = LatLng(23.777176, 90.399452)
-                    mMap?.let {
-                        it.addMarker(MarkerOptions().position(LatLng(param1, param2)).title("Je suis là!"))
 
-                       // it.moveCamera(CameraUpdateFactory.newLatLng(LatLng(param1, param2)))
-                       // it.animateCamera(CameraUpdateFactory.zoomTo(14.0f), 2000, null);
-
-                    }
                     for(p in nearPharma.listNearPharma)
                     {
                         val coord  = LatLng(p.value.lat, p.value.longi)
                         mMap?.let{it.addMarker(MarkerOptions().position(coord).title(p.value.nom))}
                     }
+
                 }
             }
                 override fun onFailure(call: Call<List<pharmacie>>?, t: Throwable?) {
@@ -191,14 +185,7 @@ class mapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCa
                     Toast.makeText(getActivity()?.getApplicationContext(), "Impossible d'accèder au serveur", Toast.LENGTH_LONG).show()
                      list = AppDatabase.getInstance(activity!!.applicationContext).getPharmaDao().getpharma()
                     nearPharma.fill(param1, param2, list)
-                    val dhaka = LatLng(23.777176, 90.399452)
-                    mMap?.let {
-                        it.addMarker(MarkerOptions().position(LatLng(param1, param2)).title("Je suis là!"))
 
-                       // it.moveCamera(CameraUpdateFactory.newLatLng(LatLng(param1, param2)))
-                        //it.animateCamera(CameraUpdateFactory.zoomTo(14.0f), 2000, null);
-
-                    }
                     for(p in nearPharma.listNearPharma)
                     {
                         val coord  = LatLng(p.value.lat, p.value.longi)
@@ -208,7 +195,18 @@ class mapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCa
                 }
             })
 
+       mMap?.let {
+            it.addMarker(MarkerOptions().position(LatLng(param1, param2)).title("Je suis là!"))
+         //
 
+        }
+      //  mMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(param1, param2)))
+       // CameraUpdateFactory.newLatLngZoom (LatLng(param1, param2), 14.0f)
+      //  mMap!!.animateCamera(CameraUpdateFactory.zoomTo(14.0f , 2000, null));
+        mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(param1, param2), 8.0f));
+
+        // Zoom in, animating the camera.
+        mMap!!.animateCamera(CameraUpdateFactory.zoomTo(15.0f), 2000, null);
 
     }
 

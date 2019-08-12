@@ -4,10 +4,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.saydaliyati.R
 
 
 import com.example.saydaliyati.pharmacieFragment.OnListFragmentInteractionListener
@@ -63,10 +61,10 @@ class MypharmacieRecyclerViewAdapter(
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mIdView: TextView = mView.item_number
-        val mContentView: TextView = mView.content
-        val mNom : TextView = mView.nom
+        val mContentView: TextView = mView.contentP
+        val mNom : TextView = mView.nomP
         val mImg : ImageView = mView.bar
-        val mHour : TextView = mView.hour
+        val mHour : TextView = mView.hourP
 
         override fun toString(): String {
             return super.toString() + " '" + mNom.text + "'"

@@ -47,8 +47,8 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
     var actualFrag : String = "map"
 
     /*** pour le map **/
-    private var mLatitudeTextView: Double = 36.7317697
-    private var mLongitudeTextView: Double = 3.1766326
+    private var mLatitudeTextView: Double = 0.0// 36.7317697
+    private var mLongitudeTextView: Double = 0.0 // 3.1766326
     private var mGoogleApiClient: GoogleApiClient? = null
     private var mLocation: Location? = null
     private var mLocationManager: LocationManager? = null

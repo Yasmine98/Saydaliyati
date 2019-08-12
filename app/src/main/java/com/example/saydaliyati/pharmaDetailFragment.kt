@@ -1,5 +1,6 @@
 package com.example.saydaliyati
 
+import android.icu.text.SimpleDateFormat
 import android.location.Location
 import android.location.LocationManager
 import androidx.lifecycle.ViewModelProviders
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toolbar
@@ -25,9 +27,14 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.app_bar_master.*
+import kotlinx.android.synthetic.main.pharma_detail_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.*
 
 
 class pharmaDetailFragment : Fragment(), OnMapReadyCallback {
@@ -82,12 +89,46 @@ class pharmaDetailFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val textView1 = view?.findViewById(R.id.idP) as TextView
+        val textView1 = view?.findViewById(R.id.contentP) as TextView
         val textView2 = view?.findViewById(R.id.nomP) as TextView
+        val textView3 = view?.findViewById(R.id.fbP) as TextView
+        val etat = view?.findViewById(R.id.etatP) as Button
+        val hour = view?.findViewById(R.id.hourP) as TextView
      //   val textView2 = view?.findViewById(R.id.nomP) as TextView
-        textView1.setText(pharm.id.toString())
+        textView1.setText(pharm.adrpost)
         textView2.setText(pharm.nom)  // find your view elements and do stuff here
+        textView3.setText(pharm.fb)
+        hour.setText("Ouverte de "+pharm.ho+" à "+pharm.hf)
+        /*etat*/
+        val string_date = "12-December-2012";
 
+      //  val f : SimpleDateFormat=  SimpleDateFormat("dd-MMM-yyyy");
+
+       // val d: Date = f.parse(string_date);
+      //   val milliseconds :Long = d.getTime();
+
+        val millis = System.currentTimeMillis()
+        val date = java.sql.Date(millis)
+        println(date)
+        //val dtf = DateTimeFormatter.ofPattern("HH:mm")
+       // val isbefore = LocalTime.parse(LocalTime.now().format(dtf)).isBefore(LocalTime.parse(pharm.hf))
+        if(true){
+        etat.setText("Ouvert")
+        etat.setBackgroundColor(resources.getColor(R.color.colorPrimary))}
+        else{
+            etat.setText("Fermée")
+            etat.setBackgroundColor(resources.getColor(R.color.colorAccent))
+        }
+
+        /*fb*/
+        val util = Util()
+        // The facebook page URL
+        val url  = pharm.fb
+        val urlweb  = "https://www.facebook.com/notfou"
+        // Onclick of the first button
+        fbP.setOnClickListener({
+            util.openPage(activity!!.applicationContext,url, url)
+        })
         updateUser(pharm.id, pharm.nom, pharm.adrpost, pharm.ho, pharm.hf, pharm.tel, pharm.fb, pharm.loc, pharm.ville, pharm.longi, pharm.lat)
     }
 

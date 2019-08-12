@@ -1,15 +1,12 @@
 package com.example.saydaliyati
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.example.saydaliyati.R
 
 data class CostumAdapter(val ctx: Context, val data:List<pharmacie>) : BaseAdapter()
 {
@@ -38,7 +35,7 @@ data class CostumAdapter(val ctx: Context, val data:List<pharmacie>) : BaseAdapt
             view = LayoutInflater.from(ctx).inflate(R.layout.fragment_pharmacie, p2, false)
             Toast.makeText(ctx,"message",Toast.LENGTH_SHORT).show()
             val textView1 = view?.findViewById(R.id.item_number) as TextView
-            val textView2 = view?.findViewById(R.id.content) as TextView
+            val textView2 = view?.findViewById(R.id.contentP) as TextView
          //   val textView3 = view?.findViewById(R.id.stateL) as TextView
          //   val imageView = view?.findViewById(R.id.image) as ImageView
             holder = ViewHolder(textView1,textView2)
