@@ -16,5 +16,5 @@
     <color name="red_400">#EF5350</color>
     <color name="pending_blue">#42a5f5</color>
     <color name='accepted_green'>#66bb6a</color>
-    <color name="refused_red">#ff8a65</color>
+    <color name="refused_red">#FF8A65</color>
 </resources>

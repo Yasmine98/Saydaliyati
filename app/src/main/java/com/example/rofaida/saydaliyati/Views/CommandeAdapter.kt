@@ -2,6 +2,7 @@ package com.example.rofaida.saydaliyati.Views
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import android.widget.TextView
@@ -10,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.rofaida.saydaliyati.Interfaces.RetrofitService
@@ -25,12 +28,17 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
 import com.bumptech.glide.request.RequestOptions
+import com.example.rofaida.saydaliyati.Commande_pending_details
+import com.example.rofaida.saydaliyati.Models.Commande_details
 import com.example.rofaida.saydaliyati.Models.EtatCommande
+import com.example.rofaida.saydaliyati.Utils
+import com.example.rofaida.saydaliyati.Verification_Code_Fragment
 
 
 class CommandeAdapter(
     private var commandes: ArrayList<Commande>,
-    private var context: Context
+    private var context: Context,
+    private var fragmentManager_: FragmentManager
 ) : RecyclerView.Adapter<CommandeAdapter.DataHolder>()
 
 {
@@ -71,7 +79,7 @@ override fun onBindViewHolder(holder: DataHolder, position: Int) {
 
     options.fitCenter()
 
-    Glide.with(context).load("http://192.168.1.5:8082/uploads/"+commande.photo).apply(options).into(holder.ordonnance_photo_)
+    Glide.with(context).load("http://192.168.1.4:8082/uploads/"+commande.photo).apply(options).into(holder.ordonnance_photo_)
 }
 
 override fun getItemCount(): Int {
@@ -97,7 +105,27 @@ inner class DataHolder(itemView: View, var context: Context, var commandes: Arra
 
     override fun onClick(view: View) {
         val commande = this.commandes[adapterPosition]
+        val commande_:Commande_details = Commande_details(
+            commande.id,
+            commande.titre,
+            commande.etat,
+            commande.photo,
+            commande.idclient,
+            commande.idpharma, commande.pharma_nom,commande.idfacture
+        )
         Toast.makeText(context, commande.titre, Toast.LENGTH_SHORT).show()
+        //Show commande details
+        var bundle: Bundle = Bundle()
+        bundle.putSerializable("commande", commande_)
+        val fragment_new: Fragment = Commande_pending_details()
+        fragment_new.arguments = bundle
+        fragmentManager_!!.beginTransaction()
+            .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+            .replace(
+                R.id.frameContainer,
+                fragment_new,
+                Utils.Verification_Code_Fragment
+            ).commit()
     }
 
 }

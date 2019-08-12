@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   xmlns:tools="http://schemas.android.com/tools" android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/linearLayout2">
+
+            <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" app:srcCompat="@drawable/error" android:id="@+id/medicament_img"
+                    android:scaleType="fitXY"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="153dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="152dp"/>
+            <TextView
+                    android:id="@+id/titleMedicament"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/medicament_img"
+                    android:layout_marginTop="8dp"
+                    android:text="Title medicament" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="124dp" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="124dp"/>
+
+            <TextView
+                    android:id="@+id/familleMedicament"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/titleMedicament"
+                    android:layout_marginTop="8dp"
+                    android:text="Famille du medicament" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="130dp" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="129dp"/>
+
+            <TextView
+                    android:id="@+id/prixMedicament"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/familleMedicament"
+                    android:layout_marginEnd="203dp" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="202dp"
+                    android:text="Prix"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="-5dp"
+            android:src="@drawable/ic_bookmark_24dp" />
+
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>

@@ -156,8 +156,15 @@ class Login_Fragment : Fragment(), OnClickListener {
                         Utils.Add_command_Fragment
                     ).commit() */
                     {
-                val intent: Intent = Intent(getActivity(), Add_Commande::class.java)
-                startActivity(intent)
+                        fragmentManager!!.beginTransaction()
+                            .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
+                            .replace(
+                                R.id.frameContainer,
+                                Commande_accepted_details(),
+                                Utils.Commande_accepted_details
+                            ).commit()
+                //val intent: Intent = Intent(getActivity(), Add_Commande::class.java)
+                //startActivity(intent)
             }
 
             R.id.createAccount ->

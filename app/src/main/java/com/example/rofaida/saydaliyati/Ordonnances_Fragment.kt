@@ -72,7 +72,8 @@ class Ordonnances_Fragment : Fragment() {
                     {
                         commandes!!.add(i)
                     }
-                    commandeAdapter = CommandeAdapter(commandes!!, this@Ordonnances_Fragment.context!!)
+                    commandeAdapter = CommandeAdapter(commandes!!, this@Ordonnances_Fragment.context!!, this@Ordonnances_Fragment.fragmentManager!!
+                    )
                     show_commandes!!.adapter = commandeAdapter
                     Toast.makeText(this@Ordonnances_Fragment.context, "Loaded :"+commandes!!.get(0).etat, Toast.LENGTH_SHORT).show()
                 }

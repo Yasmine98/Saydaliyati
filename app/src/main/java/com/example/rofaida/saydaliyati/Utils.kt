@@ -17,5 +17,6 @@ object Utils {
     val Home_Fragment = "fragment_home"
     val Add_command_Fragment = "fragment_add_command_"
     val Ordonnances_Fragment = "fragment_ordonnances"
-
+    val Commande_accepted_details = "fragment_commande_accepted_details"
+    val Commande_pending_details = "fragment_commande_pending_details"
 }

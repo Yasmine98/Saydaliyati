@@ -1,12 +1,8 @@
 package com.example.rofaida.saydaliyati.Models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import java.io.Serializable
 
-
-@Entity(tableName ="commande" )
-data class Commande(
-    @PrimaryKey
+class Commande_details(
     var id:Int,
     var titre:String,
     var etat:String,
@@ -15,4 +11,4 @@ data class Commande(
     var idpharma:Int,
     var pharma_nom:String,
     var idfacture: Int?
-)
+) : Serializable {}
