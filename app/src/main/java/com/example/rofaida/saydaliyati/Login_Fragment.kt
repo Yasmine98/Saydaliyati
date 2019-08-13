@@ -25,6 +25,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.rofaida.saydaliyati.Interfaces.RetrofitService
+import com.example.rofaida.saydaliyati.Interfaces.UserSessionManager
 import com.example.rofaida.saydaliyati.Models.User_details
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,6 +45,7 @@ class Login_Fragment : Fragment(), OnClickListener {
     private lateinit var user:User_details
     private lateinit var view1:View
 
+    private var session : UserSessionManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +77,8 @@ class Login_Fragment : Fragment(), OnClickListener {
         signUp = view1.findViewById<View>(R.id.createAccount) as TextView
         show_hide_password = view1.findViewById<View>(R.id.show_hide_password) as CheckBox
         loginLayout = view1.findViewById<View>(R.id.login_layout) as LinearLayout
+
+        session = UserSessionManager(this.context!!)
 
         // Load ShakeAnimation
         shakeAnimation = AnimationUtils.loadAnimation(
@@ -138,33 +142,16 @@ class Login_Fragment : Fragment(), OnClickListener {
             R.id.loginBtn -> checkValidation()
 
             R.id.forgot_password ->
+            {
 
                 // Replace forgot password fragment with animation
-                /*fragmentManager!!.beginTransaction()
+                fragmentManager!!.beginTransaction()
                     .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
                     .replace(
                         R.id.frameContainer,
                         ForgotPassword_Fragment(),
                         Utils.ForgotPassword_Fragment
-                    ).commit()*/
-
-                /*fragmentManager!!.beginTransaction()
-                    .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-                    .replace(
-                        R.id.frameContainer,
-                        Add_command_Fragment(),
-                        Utils.Add_command_Fragment
-                    ).commit() */
-                    {
-                        fragmentManager!!.beginTransaction()
-                            .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
-                            .replace(
-                                R.id.frameContainer,
-                                Commande_accepted_details(),
-                                Utils.Commande_accepted_details
-                            ).commit()
-                //val intent: Intent = Intent(getActivity(), Add_Commande::class.java)
-                //startActivity(intent)
+                    ).commit()
             }
 
             R.id.createAccount ->
@@ -242,9 +229,17 @@ class Login_Fragment : Fragment(), OnClickListener {
                         Toast.LENGTH_LONG
                     ).show()
 
-                    val intent: Intent = Intent(getActivity(), Menu_Activity::class.java)
-                    intent.putExtra("user", user)
+                    session!!.createUserLoginSessio(user.nss.toString(), user.nom, user.prenom, user.adr, user.tel,  user.path_image)
+
+                    val intent: Intent = Intent(activity, Menu_Activity::class.java)
+                    //intent.putExtra("user", user)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+                    //add new flag to start new activity
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
+
+                    activity!!.finish()
                 }
             }
 

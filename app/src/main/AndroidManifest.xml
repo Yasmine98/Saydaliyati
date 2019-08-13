@@ -29,6 +29,11 @@
         <activity android:name=".Payement_Activity">
         </activity>
         <activity android:name=".Menu_Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".Photo_viewer_activity">
         </activity>
@@ -46,11 +51,6 @@
         <activity android:name=".Add_Commande">
         </activity>
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
     </application>
 

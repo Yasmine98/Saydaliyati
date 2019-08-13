@@ -18,7 +18,7 @@ class Menu_fragment : Fragment(), View.OnClickListener {
     private lateinit var AddCmdBtn_: Button
     private lateinit var ShowCmdBtn_: Button
 
-    private lateinit var user:User_details
+    private var user:User_details? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +26,7 @@ class Menu_fragment : Fragment(), View.OnClickListener {
     ): View? {
         // Inflate the layout for this fragment
         view1 = inflater.inflate(R.layout.fragment_menu_fragment, container, false)
-        user = arguments!!.getSerializable("user") as User_details
+        user = arguments!!.getSerializable("user") as User_details?
         initViews()
         setListeners()
         return view1
@@ -63,7 +63,7 @@ class Menu_fragment : Fragment(), View.OnClickListener {
                             R.id.frameContainer,
                             fragment_new,
                             Utils.Ordonnances_Fragment
-                        ).commit()
+                        ).addToBackStack(null).commit()
                 }
         }
     }

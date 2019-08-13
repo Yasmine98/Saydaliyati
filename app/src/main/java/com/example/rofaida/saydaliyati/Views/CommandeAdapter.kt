@@ -124,7 +124,7 @@ inner class DataHolder(itemView: View, var context: Context, var commandes: Arra
                     R.id.frameContainer,
                     fragment_new,
                     Utils.Commande_pending_details
-                ).commit()
+                ).addToBackStack(null).commit()
         }
 
         else if (commande.etat.equals(EtatCommande.accepted.etat))
@@ -137,7 +137,7 @@ inner class DataHolder(itemView: View, var context: Context, var commandes: Arra
                     R.id.frameContainer,
                     fragment_new,
                     Utils.Commande_accepted_details
-                ).commit()
+                ).addToBackStack(null).commit()
         }
 
         else if (commande.etat.equals(EtatCommande.refused.etat))
@@ -150,7 +150,7 @@ inner class DataHolder(itemView: View, var context: Context, var commandes: Arra
                     R.id.frameContainer,
                     fragment_new,
                     Utils.Commande_refused_details
-                ).commit()
+                ).addToBackStack(null).commit()
         }
     }
 

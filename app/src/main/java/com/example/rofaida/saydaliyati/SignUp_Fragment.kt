@@ -43,8 +43,6 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //initTokenServerApi()
-        //twilioVerification = TwilioVerification(this.context!!)
     }
 
     override fun onClick(v: View) {
