@@ -5,10 +5,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
+
+apply plugin: 'com.google.gms.google-services'
+
+
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.tp2"
+        applicationId "com.example.saydaliyati"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -84,4 +88,19 @@ dependencies {
     implementation 'com.mikhaellopez:circularimageview:2.0.1'
     implementation 'com.makeramen:roundedimageview:2.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
+
+    //Add the Google services plugin//
+
+
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+//Add Firebase Core//
+
+        implementation 'com.google.firebase:firebase-core:16.0.6'
+   // implementation 'com.google.firebase:firebase-admin:6.9.0'
+
+//Add FCM//
+
+       implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
 }

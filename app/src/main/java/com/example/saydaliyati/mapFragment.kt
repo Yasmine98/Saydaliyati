@@ -37,6 +37,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_master.*
 import kotlinx.android.synthetic.main.app_bar_master.*
 import retrofit2.Call
@@ -62,6 +63,7 @@ class mapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCa
     // TODO: Rename and change types of parameters
     private var param1: Double = 0.0
     private var param2: Double = 0.0
+    lateinit var list:List<pharmacie>
     private var listener: OnFragmentInteractionListener? = null
     private val mOnClickListener: View.OnClickListener
 
@@ -159,7 +161,7 @@ class mapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCa
 
 
         /**get pharùa **/
-        lateinit var list:List<pharmacie>
+
         val call = RetrofitService.endpoint.getPharma()
         // progressBar.visibility = View.VISIBLE
         call.enqueue(object: Callback<List<pharmacie>> {
@@ -203,10 +205,18 @@ class mapFragment : Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCa
       //  mMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(param1, param2)))
        // CameraUpdateFactory.newLatLngZoom (LatLng(param1, param2), 14.0f)
       //  mMap!!.animateCamera(CameraUpdateFactory.zoomTo(14.0f , 2000, null));
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(param1, param2), 8.0f));
+        mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(param1, param2), 8.0f))
 
         // Zoom in, animating the camera.
-        mMap!!.animateCamera(CameraUpdateFactory.zoomTo(15.0f), 2000, null);
+        mMap!!.animateCamera(CameraUpdateFactory.zoomTo(15.0f), 2000, null)
+        mMap!!.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener() {
+
+             fun onInfoWindowClick(arg0: Marker) {
+                // TODO Auto-generated method stub
+                 Toast.makeText(activity!!.applicationContext, "hi", Toast.LENGTH_SHORT)
+
+            }
+        })
 
     }
 

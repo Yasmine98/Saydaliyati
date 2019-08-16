@@ -45,6 +45,11 @@
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:text">@color/primaryTextColor</item>
     </style>
+    <style name="AppTheme.AppBarOverlay.Started" parent="AppTheme.AppBarOverlay">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:text">@color/primaryTextColor</item>
+        <item name="android:windowBackground">@color/bcColor</item>
+    </style>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:text">@color/primaryTextColor</item>

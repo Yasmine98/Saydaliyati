@@ -15,5 +15,9 @@ interface Endpoint {
     fun pharma_vile(@Path("ville") isbn:String):Call<List<pharmacie>>
     @POST("addpharma")
     fun addPharma(@Body pharmacie: pharmacie):Call<String>
+    @GET("getcaissebypharma/{id}")
+    fun pharma_caisse(@Path("id") id:Int):Call<List<pharmacaisse>>
+    @GET("/getcaisse")
+    fun getCaisse(): Call<List<String>>
 
 }

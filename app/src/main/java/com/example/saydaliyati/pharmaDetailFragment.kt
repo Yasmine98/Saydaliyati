@@ -17,6 +17,7 @@ import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
@@ -94,6 +95,7 @@ class pharmaDetailFragment : Fragment(), OnMapReadyCallback {
         val textView3 = view?.findViewById(R.id.fbP) as TextView
         val etat = view?.findViewById(R.id.etatP) as Button
         val hour = view?.findViewById(R.id.hourP) as TextView
+        val caisse = view?.findViewById(R.id.caisseP) as TextView
      //   val textView2 = view?.findViewById(R.id.nomP) as TextView
         textView1.setText(pharm.adrpost)
         textView2.setText(pharm.nom)  // find your view elements and do stuff here
@@ -129,7 +131,51 @@ class pharmaDetailFragment : Fragment(), OnMapReadyCallback {
         fbP.setOnClickListener({
             util.openPage(activity!!.applicationContext,url, url)
         })
+
+        /** caisse **/
+        var caisseTexte = "Conventionnée avec : "
+        val call = RetrofitService.endpoint.pharma_caisse(pharm.id)
+        // progressBar.visibility = View.VISIBLE
+        call.enqueue(object: Callback<List<pharmacaisse>> {
+            override fun onResponse(call: Call<List<pharmacaisse>>?, response:
+            Response<List<pharmacaisse>>?) {
+
+                if(response?.isSuccessful!!){
+
+                    Log.e("erreur pharma caisse", "caisse")
+                    //  progressBar.visibility = View.INVISIBLE
+                    val list:List<pharmacaisse> = response.body()!!
+                    val list_caisse = MutableList<String>(list.size){""}
+                    for(i in 0 until list.size){
+                        list_caisse[i] = list[i].caisse
+                        caisseTexte = caisseTexte+list[i].caisse+ ", "
+                        Log.e("erreur pharma caisse", caisseTexte)
+                    }
+                    caisse.setText(caisseTexte)
+                }
+            }
+            override fun onFailure(call: Call<List<pharmacaisse>>?, t: Throwable?) {
+                //   progressBar.visibility = View.INVISIBLE
+                Log.e("erreur pharma caisse", "nothing")
+                //Toast.makeText(getActivity()?.getApplicationContext(), "Impossible d'accèder au serveur", Toast.LENGTH_LONG).show()
+
+                val list:List<pharmacaisse> = AppDatabase.getInstance(activity!!.applicationContext).getPharmaCaisseDao().getcaisseBypharma(id = pharm.id)
+                val list_caisse = MutableList<String>(list.size){""}
+                for(i in 0 until list.size) {
+                    list_caisse[i] = list[i].caisse
+                    caisseTexte = caisseTexte +list[i]+ ", "
+                }
+                caisse.setText(caisseTexte)
+            }
+        })
+
+
+
+
         updateUser(pharm.id, pharm.nom, pharm.adrpost, pharm.ho, pharm.hf, pharm.tel, pharm.fb, pharm.loc, pharm.ville, pharm.longi, pharm.lat)
+
+
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

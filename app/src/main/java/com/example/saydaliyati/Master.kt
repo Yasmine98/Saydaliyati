@@ -3,6 +3,7 @@ package com.example.saydaliyati
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.Notification
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -23,10 +24,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.work.*
+import com.android.volley.AuthFailureError
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
@@ -40,6 +45,18 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnSuccessListener
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.HashMap
+
+/*import com.google.auth.oauth2.GoogleCredentials
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions*/
 
 class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener,     AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener , OnMapReadyCallback, pharmacieFragment.OnListFragmentInteractionListener, mapFragment.OnFragmentInteractionListener{
     lateinit private var toggle : ActionBarDrawerToggle
@@ -104,8 +121,8 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
         }*/
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        fabi.setOnClickListener { view ->
+            Snackbar.make(view, "Veuillez consulter vos commandes", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 
@@ -119,6 +136,14 @@ class Master : GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnection
         nav_view.setNavigationItemSelectedListener(this)
 
         synchronizePharma()//Pour supprimé de room les pharmacies qui n'existnt plus sur le serveur
+
+        /** pour firebase **/
+    /*    val options =  FirebaseOptions.Builder()
+    .setCredentials(GoogleCredentials.getApplicationDefault())
+    .setDatabaseUrl("https://hello.firebaseio.com/")
+    .build()*/
+
+//FirebaseApp.initializeApp(options)
 
     }
 
@@ -277,37 +302,39 @@ Log.e("cooo", mLocation?.latitude.toString())
         return true
     }
 
- /*   override fun onOptionsItemSelected(item: MenuItem): Boolean {
+   override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
-            R.id.action_settings -> return true
+            R.id.action_settings -> {
+                sendNotification()
+               // Toast.makeText(this, "hi", Toast.LENGTH_SHORT).show()
+                return true
+            }
             else -> return super.onOptionsItemSelected(item)
         }
-    }*/
+    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
+
         when (item.itemId) {
             R.id.nav_Pharma -> {
                 val f = mapFragment.newInstance(mLatitudeTextView, mLongitudeTextView) as Fragment
                 replaceFragment(f)
                 // Handle the camera action
             }
-            R.id.nav_gallery -> {
+            R.id.nav_cmd -> {
 
             }
-            R.id.nav_slideshow -> {
+            R.id.nav_fact -> {
 
             }
-            R.id.nav_manage -> {
+            R.id.nav_profile-> {
 
             }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
+            R.id.nav_deco -> {
 
             }
         }
@@ -459,5 +486,56 @@ Log.e("cooo", mLocation?.latitude.toString())
 
         WorkManager.getInstance().enqueue(request)
     }
+
+    /** ntification **/
+    private val FCM_API = "https://fcm.googleapis.com/fcm/send"
+    private val serverKey = "key=" + "AAAAchI0EIs:APA91bEvHzqvkWQElCoHDrSXknS_LVR1T5A7GTfTmApzKCzKn388ELvTdsSVMl1SF0zULYO6A4Bg9Gh9v_-uV7om80E-EFsu7Y5nQK7UGbbNZLGjTnQyf3jQoZ0A4gN8nax5mlsg7z9A"
+    private val contentType = "application/json"
+    internal val TAG = "NOTIFICATION TAG"
+
+    lateinit internal var NOTIFICATION_TITLE: String
+    lateinit internal var NOTIFICATION_MESSAGE: String
+    lateinit internal var TOPIC: String
+
+
+
+    private fun sendNotification() {
+
+        TOPIC = "/topics/userABC" //topic has to match what the receiver subscribed to
+        NOTIFICATION_TITLE = "hello"
+        NOTIFICATION_MESSAGE = "congrats"
+
+        val notification = JSONObject()
+        val notifcationBody = JSONObject()
+        try {
+            notifcationBody.put("title", NOTIFICATION_TITLE)
+            notifcationBody.put("message", NOTIFICATION_MESSAGE)
+
+            notification.put("to", TOPIC)
+            notification.put("data", notifcationBody)
+        } catch (e: JSONException) {
+            Log.e(TAG, "onCreate: " + e.message)
+        }
+        val jsonObjectRequest = object : JsonObjectRequest(FCM_API, notification,
+            Response.Listener { response ->
+                Log.i(TAG, "onResponse: $response")
+
+            },
+            Response.ErrorListener {
+                Toast.makeText(this@Master, "Request error", Toast.LENGTH_LONG).show()
+                Log.i(TAG, "onErrorResponse: Didn't work")
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["Authorization"] = serverKey
+                params["Content-Type"] = contentType
+                return params
+            }
+        }
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest)
+        fabi.isVisible = true
+    }
+
 
 }
