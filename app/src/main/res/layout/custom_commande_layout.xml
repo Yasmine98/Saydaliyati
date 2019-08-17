@@ -23,7 +23,7 @@
 
             <TextView
                     android:id="@+id/commande_titre"
-                    android:text="Enter blog title..."
+                    android:text="Titre de la commande"
                     android:textSize="15sp"
                     android:textColor="@android:color/darker_gray"
                     android:layout_toRightOf="@+id/ordonnance_photo"
@@ -33,7 +33,7 @@
 
             <TextView
                     android:id="@+id/pharmacie"
-                    android:text="Enter blog author name..."
+                    android:text="Nom de la pharmacie"
                     android:textSize="14sp"
                     android:layout_marginLeft="7dp"
                     android:textColor="@android:color/darker_gray"
@@ -69,7 +69,7 @@
 
                     <TextView
                             android:id="@+id/status_commande"
-                            android:text="hello there"
+                            android:text="Etat de la commande"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="0dp"
                             android:layout_width="wrap_content"

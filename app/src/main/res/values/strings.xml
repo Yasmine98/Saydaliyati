@@ -25,6 +25,8 @@
     <string name="back">RETOUR</string>
     <string name="code">Enter Code</string>
     <string name="payer">Payer</string>
+    <string name="payment_">Saisir le montant à payer</string>
+    <string name="Add_commande">Envoyer ordonnance</string>
     <string name="message_conf">Entrez le code de vérification que vous avez reçu par SMS</string>
     <string name="continu">Conituner</string>
     <string name="navigation_drawer_open">open</string>

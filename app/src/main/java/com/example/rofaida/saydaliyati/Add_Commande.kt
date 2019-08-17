@@ -52,11 +52,9 @@ class Add_Commande : AppCompatActivity(), View.OnClickListener {
     private val ALL_PERMISSIONS_RESULT = 107
     private val IMAGE_RESULT = 200
     private lateinit var fabCamera:Button
-    private lateinit var fabUpload:Button
     private lateinit var fabInsert:Button
     private var  mBitmap:Bitmap? = null
     private lateinit var  textView: TextView
-    private lateinit var  pharmaID: EditText
     private lateinit var  msgPharma: EditText
     private lateinit var progressBar_: ProgressBar
 
@@ -74,13 +72,10 @@ class Add_Commande : AppCompatActivity(), View.OnClickListener {
     private fun initViews() {
 
         fabCamera = findViewById(R.id.fab) as Button
-        fabUpload = findViewById(R.id.fabUpload) as Button
         fabInsert = findViewById(R.id.display_) as Button
         textView = findViewById(R.id.textView3) as TextView
-        pharmaID = findViewById(R.id.pharma_id) as EditText
         msgPharma = findViewById(R.id.msg_pharma) as EditText
         fabCamera.setOnClickListener(this)
-        fabUpload.setOnClickListener(this)
         fabInsert.setOnClickListener(this)
         progressBar_ = findViewById(R.id.progressBar5) as ProgressBar
         progressBar_.setVisibility(View.INVISIBLE)
@@ -90,10 +85,6 @@ class Add_Commande : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v:View) {
         when (v.getId()) {
             R.id.fab -> startActivityForResult(getPickImageChooserIntent(), IMAGE_RESULT)
-
-            R.id.fabUpload -> {
-                send_commande()
-            }
 
             R.id.display_ -> send_commande()
         }
@@ -125,7 +116,7 @@ class Add_Commande : AppCompatActivity(), View.OnClickListener {
         {
             var idCommande = 0
             val getIdClient = 123
-            val getNomPharma = pharma_id.text.toString()
+            val getNomPharma = "Pharmacie 1"
             val getMsg = msg_pharma.text.toString()
             val etat = EtatCommande.pending.etat
             val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")

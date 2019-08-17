@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="   Upload id prof pic" app:layout_constraintTop_toTopOf="parent"
+            android:text="Téléchargment de la photo" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/textView3"/>
 
@@ -37,45 +37,15 @@
             app:layout_constraintTop_toBottomOf="@+id/IdProf" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.498"/>
 
-    <Button
-            android:id="@+id/fabUpload"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:background="@drawable/loginbutton_selector"
-            android:padding="3dp"
-            android:text="Via Camera"
-            android:textColor="@color/background_color"
-            android:textSize="17sp"
-            android:textStyle="bold" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/fab" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent"/>
-    <TextView
-            android:text="Pharmacie ID"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView4" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            android:layout_marginTop="13dp" app:layout_constraintTop_toBottomOf="@+id/fabUpload"
-            android:textSize="18sp"/>
-    <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/pharma_id" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" android:hint="Pharmacie_ID"
-            android:layout_marginStart="8dp"/>
     <TextView
             android:text="Message au pharmacie"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/textView5" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/pharma_id" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/textView5"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" android:textSize="18sp"/>
+            android:layout_marginEnd="8dp" android:textSize="18sp" android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@+id/fab"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,13 +56,13 @@
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" android:hint="Message"/>
     <Button
-            android:text="Button"
-            android:layout_width="88dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/display_" android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@+id/msg_pharma" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="160dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="163dp"/>
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="163dp"
+            android:text="@string/Add_commande"/>
     <ProgressBar
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
