@@ -4,6 +4,8 @@ import com.example.rofaida.saydaliyati.Models.Client
 import com.example.rofaida.saydaliyati.Models.Commande
 import com.example.rofaida.saydaliyati.Models.Facture
 import com.example.rofaida.saydaliyati.Models.User_details
+import com.example.rofaida.saydaliyati.pharmacaisse
+import com.example.rofaida.saydaliyati.pharmacie
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -58,8 +60,23 @@ interface Endpoint {
     @GET("getCommandes")
     fun getCommandes(): Call<ArrayList<Commande>>
 
-    /**** Braintree Integration ***/
+    /**** Pharmacy part ***/
 
+    // Call<List<Book>: une fonction callback qui retourne une liste
+    @GET("/getpharma")
+    fun getPharma(): Call<List<pharmacie>>
 
+    // Envoi d'un paramètre name
+    @GET("getpharmabyville/{ville}")
+    fun pharma_vile(@Path("ville") isbn:String):Call<List<pharmacie>>
+
+    @POST("addpharma")
+    fun addPharma(@Body pharmacie: pharmacie):Call<String>
+
+    @GET("getcaissebypharma/{id}")
+    fun pharma_caisse(@Path("id") id:Int):Call<List<pharmacaisse>>
+
+    @GET("/getcaisse")
+    fun getCaisse(): Call<List<String>>
 
 }

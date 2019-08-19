@@ -125,6 +125,8 @@ class Payement_Activity : AppCompatActivity() {
                                 if(t!!.success)
                                 {
                                     Toast.makeText(this@Payement_Activity, "Paiement Effectué avec succès", Toast.LENGTH_LONG).show()
+                                    //Etat to already payed
+                                    onDestroy()
 
                                 }
                                 else

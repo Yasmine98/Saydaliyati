@@ -76,7 +76,7 @@ override fun onBindViewHolder(holder: DataHolder, position: Int) {
 
     options.fitCenter()
 
-    Glide.with(context).load("http://192.168.1.4:8082/uploads/"+commande.photo).apply(options).into(holder.ordonnance_photo_)
+    Glide.with(context).load(RetrofitService.url_images+commande.photo).apply(options).into(holder.ordonnance_photo_)
 }
 
 override fun getItemCount(): Int {
@@ -108,7 +108,7 @@ inner class DataHolder(itemView: View, var context: Context, var commandes: Arra
             commande.etat,
             commande.photo,
             commande.idclient,
-            commande.idpharma, commande.pharma_nom,commande.idfacture,""
+            commande.idpharma, commande.pharma_nom,commande.idfacture,"", commande.date_commande
         )
         Toast.makeText(context, commande.titre, Toast.LENGTH_SHORT).show()
         //Show commande details

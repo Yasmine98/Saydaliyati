@@ -17,6 +17,7 @@ import com.example.rofaida.saydaliyati.Models.Commande_details
 import com.squareup.picasso.Picasso
 import android.content.Intent
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.rofaida.saydaliyati.Interfaces.RetrofitService
 import com.example.rofaida.saydaliyati.Models.EtatCommande
 
 
@@ -62,7 +63,7 @@ class Commande_pending_details : Fragment(), View.OnClickListener {
 
         commande_etat_.setTextColor(this.context!!.resources.getColor(R.color.pending_blue))
 
-        date_commande_.setText("Date Now")
+        date_commande_.setText(commande!!.date_commande)
         val options = RequestOptions()
             .centerCrop()
             .placeholder(R.mipmap.ic_launcher_round)
@@ -70,7 +71,7 @@ class Commande_pending_details : Fragment(), View.OnClickListener {
 
         options.fitCenter()
 
-        Glide.with(this@Commande_pending_details.context!!).load("http://192.168.1.4:8082/uploads/"+commande!!.photo).apply(options).into(img_commande_)
+        Glide.with(this@Commande_pending_details.context!!).load(RetrofitService.url_images+commande!!.photo).apply(options).into(img_commande_)
 
         zoom_img_.setOnClickListener(this)
     }
@@ -83,7 +84,7 @@ class Commande_pending_details : Fragment(), View.OnClickListener {
     }
 
     private fun display_ordonnance() {
-        val url = "http://192.168.1.4:8082/uploads/"+commande!!.photo
+        val url = RetrofitService.url_images+commande!!.photo
         val intent: Intent = Intent(getActivity(), Photo_viewer_activity::class.java)
         intent.putExtra("url", url)
         startActivity(intent)

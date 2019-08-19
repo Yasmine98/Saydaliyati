@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#00A650</color>
+    <color name="colorPrimaryDark">#007624</color>
+    <color name="colorAccent">#FC0606</color>
     <color name="background_color">#009688</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -17,4 +17,16 @@
     <color name="pending_blue">#42a5f5</color>
     <color name='accepted_green'>#66bb6a</color>
     <color name="refused_red">#FF8A65</color>
+
+    <color name="primaryLightColor">#54d97e</color>
+    <color name="secondaryColor">#fc0606</color>
+    <color name="secondaryLightColor">#ff5b39</color>
+    <color name="secondaryDarkColor">#c00000</color>
+    <color name="primaryTextColor">#fafafa</color>
+    <color name="secondaryTextColor">#fafafa</color>
+    <color name="surfaceColor">#FFFFFF</color>
+    <color name="textOnSurfaceColor">#868585</color>
+    <color name="iconColor">#95A5A6</color>
+    <color name="bcColor">#EEF1F1</color>
+
 </resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view"
+>
+
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_Pharma"
+                android:icon="@drawable/ic_pin_drop_black_24dp"
+                android:title="Pharmacie"/>
+        <item
+                android:id="@+id/nav_cmd"
+                android:icon="@drawable/cmd"
+                android:title="Mes commandes"/>
+        <item
+                android:id="@+id/nav_fact"
+                android:icon="@drawable/fact"
+                android:title="Mes factures"/>
+
+    </group>
+
+    <item android:title="Compte">
+        <menu>
+            <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/profile"
+                    android:title="Mon pofile"/>
+            <item
+                    android:id="@+id/nav_deco"
+                    android:icon="@drawable/decon"
+                    android:title="Se déconnecter"/>
+        </menu>
+    </item>
+
+</menu>

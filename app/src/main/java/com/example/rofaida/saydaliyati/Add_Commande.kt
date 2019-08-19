@@ -39,8 +39,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 
 class Add_Commande : AppCompatActivity(), View.OnClickListener {
@@ -169,7 +173,7 @@ class Add_Commande : AppCompatActivity(), View.OnClickListener {
 
                                         if (!file_name.equals("")) {
                                             val commande: Commande =
-                                                Commande(idCommande, Titre, etat, file_name, getIdClient, 0, getNomPharma, null)
+                                                Commande(idCommande, Titre, etat, file_name, getIdClient, 0, getNomPharma, null, "", dateCommande)
                                             val call2 = RetrofitService.endpoint.addCommande(commande)
                                             call2.enqueue(object : Callback<String> {
                                                 override fun onFailure(call: Call<String>, t: Throwable) {

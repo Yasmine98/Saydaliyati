@@ -148,7 +148,7 @@ class Login_Fragment : Fragment(), OnClickListener {
                 fragmentManager!!.beginTransaction()
                     .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
                     .replace(
-                        R.id.frameContainer,
+                        R.id.frameContainer2,
                         ForgotPassword_Fragment(),
                         Utils.ForgotPassword_Fragment
                     ).commit()
@@ -160,7 +160,7 @@ class Login_Fragment : Fragment(), OnClickListener {
                 fragmentManager!!.beginTransaction()
                     .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
                     .replace(
-                        R.id.frameContainer, SignUp_Fragment(),
+                        R.id.frameContainer2, SignUp_Fragment(),
                         Utils.SignUp_Fragment
                     ).commit()
         }

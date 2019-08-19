@@ -15,7 +15,7 @@ object RetrofitServicePayement {
        /* val client = OkHttpClient.Builder()
             .connectTimeout(100, TimeUnit.SECONDS)
             .readTimeout(100, TimeUnit.SECONDS).build()*/
-        Retrofit.Builder().baseUrl("http://192.168.1.4:8292/").
+        Retrofit.Builder().baseUrl("http://192.168.1.6:8292/").
             addCallAdapterFactory(RxJava2CallAdapterFactory.create()).
             addConverterFactory(GsonConverterFactory.create()).
             build().create(IBrainTree::class.java)

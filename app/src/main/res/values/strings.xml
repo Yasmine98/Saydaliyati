@@ -32,7 +32,17 @@
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
     <string name="upload">Télécharger ordonnance</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_master">Saydaliyati</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_get_started">GetStarted</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+
 
 </resources>

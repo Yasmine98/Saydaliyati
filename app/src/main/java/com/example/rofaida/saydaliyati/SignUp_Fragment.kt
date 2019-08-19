@@ -190,14 +190,14 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
     {
         val body = "Votre Mot de Passe du compte Saydaliyati est :"+client.mdp
         val from = "+18162826468"
-        val to = "+213793740560"
+        //val to = "+213793740560"
 
         val base64EncodedCredentials = "Basic " + Base64.encodeToString((ACCOUNT_SID + ":" + AUTH_TOKEN).toByteArray(), Base64.NO_WRAP)
         val smsData = mutableMapOf<String, String>()
 
-        smsData.put("From", from);
-        smsData.put("To", to);
-        smsData.put("Body", body);
+        smsData.put("From", from)
+        smsData.put("To", to)
+        smsData.put("Body", body)
 
         progressBar_.setVisibility(View.VISIBLE)
         val retrofit = Retrofit.Builder()
@@ -224,7 +224,7 @@ class SignUp_Fragment : Fragment(), View.OnClickListener {
                     fragmentManager!!.beginTransaction()
                         .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
                         .replace(
-                            R.id.frameContainer,
+                            R.id.frameContainer2,
                             fragment_new,
                             Utils.Verification_Code_Fragment
                         ).commit()

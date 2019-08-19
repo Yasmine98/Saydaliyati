@@ -1,6 +1,7 @@
 package com.example.rofaida.saydaliyati.Models
 
 import java.io.Serializable
+import java.sql.Date
 
 class Commande_details(
     var id:Int,
@@ -11,5 +12,6 @@ class Commande_details(
     var idpharma:Int,
     var pharma_nom:String,
     var idfacture: Int?,
-    var motifRefus:String
+    var motifRefus:String,
+    var date_commande:String
 ) : Serializable {}

@@ -102,7 +102,11 @@ class Menu_Activity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                     ).addToBackStack(null).commit()
             }
             R.id.nav_item_three -> Toast.makeText(this, "Pharmacies", Toast.LENGTH_SHORT).show()
-            R.id.nav_item_seven -> session!!.logoutUser()
+            R.id.nav_item_seven ->
+            {
+                session!!.logoutUser()
+                this.onDestroy()
+            }
         }
         drawer.closeDrawer(GravityCompat.START)
         return true
@@ -113,7 +117,7 @@ class Menu_Activity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         toggle.syncState()
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         toggle.onConfigurationChanged(newConfig)
     }

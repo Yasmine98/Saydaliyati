@@ -71,7 +71,7 @@ class Verification_Code_Fragment() : Fragment(), View.OnClickListener {
             fragmentManager!!.beginTransaction()
                 .setCustomAnimations(R.anim.right_enter, R.anim.left_out)
                 .replace(
-                    R.id.frameContainer,
+                    R.id.frameContainer2,
                     fragment_new,
                     Utils.Initialize_Password_Fragment
                 ).commit()

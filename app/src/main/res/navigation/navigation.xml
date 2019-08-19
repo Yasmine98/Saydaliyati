@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
+            app:startDestination="@id/mapFragment">
+
+    <fragment android:id="@+id/pharmacieFragment" android:name="com.example.saydaliyati.pharmacieFragment"
+              android:label="fragment_pharmacie_list" tools:layout="@layout/fragment_pharmacie_list">
+        <action android:id="@+id/action_pharmacieFragment_to_pharmaDetailFragment"
+                app:destination="@id/pharmaDetailFragment"/>
+        <action android:id="@+id/action_pharmacieFragment_pop" app:popUpTo="@id/pharmacieFragment"
+                app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment android:id="@+id/pharmaDetailFragment" android:name="com.example.saydaliyati.pharmaDetailFragment"
+              android:label="pharma_detail_fragment" tools:layout="@layout/pharma_detail_fragment">
+        <action android:id="@+id/action_pharmaDetailFragment_pop" app:popUpTo="@id/pharmaDetailFragment"
+                app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment android:id="@+id/mapFragment" android:name="com.example.saydaliyati.mapFragment"
+              android:label="fragment_map" tools:layout="@layout/fragment_map">
+        <action android:id="@+id/action_mapFragment_to_pharmacieFragment" app:destination="@id/pharmacieFragment"/>
+    </fragment>
+</navigation>

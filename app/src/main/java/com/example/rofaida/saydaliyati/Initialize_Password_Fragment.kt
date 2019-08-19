@@ -2,6 +2,7 @@ package com.example.rofaida.saydaliyati
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.example.rofaida.saydaliyati.Interfaces.RetrofitService
+import com.example.rofaida.saydaliyati.Interfaces.UserSessionManager
 import com.example.rofaida.saydaliyati.Models.User_details
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,6 +32,8 @@ class Initialize_Password_Fragment : Fragment(), View.OnClickListener {
     private lateinit var ConfirmPswButton: Button
     private lateinit var client: User_details
     private lateinit var progressBar_: ProgressBar
+
+    private var session : UserSessionManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +65,9 @@ class Initialize_Password_Fragment : Fragment(), View.OnClickListener {
             ConfirmPswButton = view1.findViewById<View>(R.id.ConfirmPswBtn) as Button
             progressBar_ = view1.findViewById<View>(R.id.progressBar4) as ProgressBar
             progressBar_.visibility = View.INVISIBLE
+
+            session = UserSessionManager(this.context!!)
+
             // Setting text selector over textviews
             val xrp = getResources().getXml(R.drawable.text_selector)
             try {
@@ -170,6 +177,18 @@ class Initialize_Password_Fragment : Fragment(), View.OnClickListener {
                             progressBar_.visibility = View.INVISIBLE
                             val resp:String = response.body()!!
                             Toast.makeText(this@Initialize_Password_Fragment.context ,resp+ "Welcome to Saydaliyati", Toast.LENGTH_LONG).show()
+                            session!!.createUserLoginSessio(client.nss.toString(), client.nom,client.prenom, client.adr, client.tel,  client.path_image)
+
+                            val intent: Intent = Intent(activity, Menu_Activity::class.java)
+                            //intent.putExtra("user", user)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+                            //add new flag to start new activity
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+
+                            activity!!.finish()
+
                         }
                     }
 

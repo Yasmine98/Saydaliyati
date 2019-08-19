@@ -5,8 +5,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitService {
     val endpoint :Endpoint by lazy {
-        Builder().baseUrl("http://192.168.1.4:8082/").
+        Builder().baseUrl("http://192.168.1.6:8082/").
             addConverterFactory(GsonConverterFactory.create()).
             build().create(Endpoint::class.java)
     }
+
+    val url_images = "http://192.168.1.6:8082/uploads/"
 }

@@ -4,9 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.Retrofit
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main2)
         fragmentManager = supportFragmentManager
         // If savedinstnacestate is null then replace login fragment
         if (savedInstanceState == null) {
